@@ -1,10 +1,3 @@
-# LeetcodePractice
+This repo is to cllect my python implementation of algorithms and data structure.
 
-LeetcodePractice is a excerise to polish my programming skill  
-
-## What's New
-
-### 1.1 
-first round around 300 questions
-### 1.2
-To be continue..
+Why is algorithms and DS? Both are important for whom work as machine learning research and engineering. However, most importantly reason is - it is fun!!!
