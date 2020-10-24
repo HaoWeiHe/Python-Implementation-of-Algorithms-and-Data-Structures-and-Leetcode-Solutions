@@ -1,6 +1,4 @@
-# Python Implementation of Algorithms, Data Structures and Leetcode Solutions
-
-
+# Data Structures and Algorithms in Python
 
 This repo is to cllect my python implementation of algorithms and data structure.
 
