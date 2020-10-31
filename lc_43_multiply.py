@@ -3,37 +3,36 @@ class Solution(object):
         """
                 11
         num1 = "123"
+                012+1
         num2 = "456"
-                738
-                15
-        res = [ 738]
-        car = [ ]
-        
-        """
-        if num1=="0" or num2=='0': return "0"
-        num1 = num1[::-1]
-        num2 = num2[::-1]
-        final_car = 0
-        car,rem, res = 0,0,[0 for x in range(len(num2)+len(num1)) ]
-        for i in range(len(num1)):
-            for j in range(len(num2)) :
-                
-                _sum = int(num1[i]) * int(num2[j])
-                car, rem = divmod(_sum + car + res[i+j],10) 
-                
-                res[i+j] = rem
-                res[i+j+1] += car
-                
-                final_car = car
-                car, rem = 0,0
-        car = final_car/10
-        
-        if car :
-            res = res + [car]
-        
-        while res[-1] == 0:
-            res.pop()
-        return "".join(map(str,res[::-1]))
+        ----------------
+res =  [0,0,0,1,1,0]
+car =             8 (18+0)/10
+rem =         6  3  8(18+0)%10
 
-num1, num2 = "9","0"
+divmod(num1[i]*num2[j] + res[i+j])
+-------------------------------
+        [0,0,0,6,3,8]
+        """
+        res =[0] * (len(num1) + len(num2))
+
+        
+        for j in range(len(num2)-1,-1,-1):
+            for i in range(len(num1)-1,-1,-1):
+                car, rem = divmod(int(num1[i])* int(num2[j]) + res[i+j+1],10)
+                res[i+j+1] = rem
+                res[i+j] += car
+                rem, car = 0,0
+        while res:
+            if res[0] ==0: 
+                res.pop(0)
+            else: 
+                break
+        return "".join(map(str,res)) if res else "0"
+
+
+
+
+
+num1, num2 = "123","456"
 print(Solution().multiply(num1,num2))
