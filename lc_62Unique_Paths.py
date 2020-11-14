@@ -11,7 +11,7 @@ class Solution(object):
             if x ==1 and y ==1:return 1
             if (x,y) in self.mem:
                 return self.mem[(x,y)]
-            res = f(x-1,y) + f(x,y-1)
-            self.mem[(x,y)] = res
-            return res
+         
+            self.mem[(x,y)] = f(x-1,y) + f(x,y-1)
+            return self.mem[(x,y)]
         return f(m,n)
