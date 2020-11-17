@@ -95,8 +95,4 @@ class Solution(object):
 
         return f(m-1,n-1)
 
-
-g  =[[0,0,0],[0,1,0],[0,0,0]]
-Solution().uniquePathsWithObstacles(g)
-
         
