@@ -14,6 +14,7 @@ class Solution(object):
         self.res = float('inf')
         
         def f(x,y):
+
             if y > x:
                 return float('inf')
             if x < 0 or y < 0:
@@ -32,7 +33,6 @@ class Solution(object):
         m = len(triangle) 
         for  j in range(len(triangle[-1])):           
             self.mem  = {}
-            tmp = f(m-1,j)
-            self.res = min(self.res, tmp)
+            self.res = min(self.res, f(m-1,j))
             
         return self.res
