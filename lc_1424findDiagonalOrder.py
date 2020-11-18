@@ -17,10 +17,5 @@ class Solution(object):
             for j in range(len(row)):
                 tuples.append((i+j,i,j))
                 
-        sort_res = sorted(tuples, key = lambda (s,r,c): (s,-r))
-        res =[]
-        for ele in sort_res:
-            s,i,j = ele
-            res.append(nums[i][j] )
-        return res
-        
+        tuples.sort(key = lambda (s,r,c): (s,-r))
+        return [nums[r][c] for s,r,c in tuples]
