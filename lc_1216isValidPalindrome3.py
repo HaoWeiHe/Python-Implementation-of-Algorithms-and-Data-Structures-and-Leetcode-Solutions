@@ -1,5 +1,27 @@
+
 class Solution(object):
     def isValidPalindrome(self, s, k):
+        l, r = 0, len(s)-1
+        self.mem = {}
+
+        def check(l,r):
+          
+            if l >=r :
+                return 0
+
+            if (l,r) in self.mem:
+                return self.mem[(l,r)]
+            
+            if s[l] != s[r]:
+                self.mem[(l,r)] = min(check(l+1,r) +1,
+                                      check(l,r-1) +1
+                                      )
+            else: 
+                self.mem[(l,r)] = check(l+1, r-1)
+            
+            return self.mem[(l,r)] 
+        return check(l,r) <= k
+    def isValidPalindrome2(self, s, k):
         """
         if s[l]!=s[r]:
             check(l+1,r,k-1) or 
@@ -15,7 +37,6 @@ class Solution(object):
 
         l, r = 0, len(s)-1
         self.mem = {}
-
         def isPalindrome(l,r):
             while l <=r:
                 if s[l]!=s[r]:
@@ -40,3 +61,6 @@ class Solution(object):
                     r -= 1
             return True
         return check(l,r,k)
+
+s,k = 'baaaabaa',3
+print(Solution().isValidPalindrome(s,k))
