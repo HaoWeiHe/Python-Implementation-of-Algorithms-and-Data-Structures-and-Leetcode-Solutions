@@ -2,35 +2,32 @@ class Solution(object):
     """
               [
                 [2],  0
-                [3,4], 0  1
+               [3,4], 0  1 
                 [6,5,7], 0,1  2
                 [4,1,8,3]   1,2 3
         ]
         
         f(x,y) : the max value from left bottom to x,y
         f(x,y) = min(f(x-1,y) , f(x-1,y-1) ) + A[x][y]
+        everytime compare the top and up-right
         """
     def minimumTotal(self, triangle):
         if not triangle:
             return 0
-
+        height = len(triangle)
+        noright, notop = False, False
+        for level in range(1,height):
+            for idx in range(level + 1): #every level n have #n nodes   
+                noright = True if idx >= level else False
+                notop = True if idx ==0 else False
+                top_val = float('inf') if notop else triangle[level-1][idx-1]
+                right_val = float('inf') if noright else triangle[level -1][idx]    
+                triangle[level][idx] = min(top_val, right_val) + triangle[level][idx]
         
-        res = float('inf')
-
-        for i in range(1,len(triangle)):
-            for j  in range(i+1):
-                top, left = float('inf'),float('inf')
-                if 1 < j  :
-                    left = triangle[i-1][j-1]
-                if j < i+1:
-                    top = triangle[i-1][j]
-        
-                triangle[i][j] = triangle[i][j] + min(left, top)    
-                # triangle[i][j] = triangle[i][j] + min(triangle[i-1][j], triangle[i-1][j-1])
-        print(triangle)
-        for e in triangle:
-            print(e)
         return min(triangle[-1])
+
+
+
 
     def minimumTotal2(self, triangle):
         
