@@ -1,44 +1,26 @@
 class Solution(object):
     def eraseOverlapIntervals(self, intervals):
         """
-        dfs to check every possible intervals
+
         """
+        intervals.sort()
+        if len(intervals) <=1:
+            return 0
     
-        def check(intervals):
-            n = len(intervals)
-            for i in range(n):
-                for j in range(i+1, n):
-                    a_start, a_end = intervals[i]
-                    b_start, b_end  = intervals[j]
-                    if a_start <= b_start <= a_end and a_start <= b_end <= a_end:
-                        return False
-            return True
-
-        # pop one of them
-
-        self.res =[]
-        self.visted = []
-        def gen(intervals):
+        l,r = 0,1
+        count = 0
+        while r < len(intervals):
+            if intervals[l][1] <= intervals[r][0]:
+                l = r
+               
+            elif intervals[l][1] <= intervals[r][1]: #del right
+                count +=1
+               
+            else:
+                count +=1
+                l = r
+            r +=1
             
-            cur = "".join(map(str, intervals))
-            print(cur,intervals)
-            if cur not in self.visted:
-                self.res.append(intervals)
-            self.visted.append(cur)
-            tmp = intervals[:] 
-            for ele in intervals:
-                tmp.remove(ele)
-                gen(tmp)
-                tmp.append(ele)
-        
-        gen(intervals)
-        for e in self.res:
-            print(e,"Re")
-        candidates = sorted(self.res, key = lambda x: len(x), reverse = True)
-        # for ele in candidates:
-        #     print(ele)
-            # if check(ele):
-                # return len(intervals) - len(ele)
-      
-intervals =  [[1,2],[2,3]]#[[1,2],[2,3],[3,4],[1,3]]
-print(Solution().eraseOverlapIntervals(intervals))
+        return count
+                
+            
