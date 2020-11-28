@@ -1,6 +1,18 @@
 import heapq, collections
 class Solution(object):
+
     def findClosestElements(self, arr, k, x):
+        """
+        del the farest one until k elements remaind
+        """
+        l,r = 0, len(arr)
+        while len(arr) > k:
+            if abs(x - arr[-1]) >= abs(x-arr[0]):
+                arr.pop()
+            else:
+                arr.pop(0)
+        return arr
+    def findClosestElements2(self, arr, k, x):
         """
         use heap and dicionary : 
         [distance, obj],  {obj:[ordered lst]}
