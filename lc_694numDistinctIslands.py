@@ -16,7 +16,7 @@ class Solution(object):
 				nx, ny = x + d[way][0], y + d[way][1]
 				if 0 <= nx < m and 0 <= ny < n and grid[nx][ny] == 1:
 					hst += way + dfs(nx,ny)
-			
+			hst += "o"
 			return hst
 		
 		for i in range(m):
