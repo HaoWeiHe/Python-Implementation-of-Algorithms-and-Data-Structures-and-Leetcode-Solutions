@@ -22,7 +22,7 @@ class Solution(object):
                 if  K < mid - i + 1:
                     sort(i,mid - 1,lst, K)
                 elif K > mid - i + 1:
-                    sort(mid + 1,j,lst, K - mid + i - 1) 
+                    sort(mid + 1,j,lst, K - (mid -i +1)) 
 
         def partition(lo,hi,lst):
             pivot = hi
