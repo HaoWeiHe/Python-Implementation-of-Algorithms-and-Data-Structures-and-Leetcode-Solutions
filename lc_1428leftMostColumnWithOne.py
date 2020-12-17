@@ -17,6 +17,24 @@
 class Solution(object):
     def leftMostColumnWithOne(self, binaryMatrix):
         """
+        from the left  right to bottom left 
+        [      1   ]
+        [   1 0    ]
+        """
+        m, n = binaryMatrix.dimensions() 
+        i,j = -1,-1
+        upperbound = n
+        for row in range(m):
+            for pivot in range(upperbound-1,-1,-1):
+                if  binaryMatrix.get(row,pivot) == 1:
+                    upperbound = pivot
+                else: break
+        return upperbound if upperbound != n else -1
+                
+        
+        
+    def leftMostColumnWithOne2(self, binaryMatrix):
+        """
         bfs for every rows and append it to res
      
         """
