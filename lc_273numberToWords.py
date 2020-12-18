@@ -2,95 +2,37 @@ class Solution(object):
     def numberToWords(self, num):
       
         """
-        1 234 567-thouthand 891
+        1 234 567 891
         
-        1. split num to chunk (3 nums a chunk)
-        2. pass each chunk  to helper
+        1. split num to chunk 
+        2. pass each chunk  to converter
         3. concat the step2
         """
-        
-        def one(num):
-            switcher = {
-                    1: 'One',
-                    2: 'Two',
-                    3: 'Three',
-                    4: 'Four',
-                    5: 'Five',
-                    6: 'Six',
-                    7: 'Seven',
-                    8: 'Eight',
-                    9: 'Nine'
-                }
-            return switcher.get(num)
-       
-        def two_less_20(num):
-            switcher = {
-                10: 'Ten',
-                11: 'Eleven',
-                12: 'Twelve',
-                13: 'Thirteen',
-                14: 'Fourteen',
-                15: 'Fifteen',
-                16: 'Sixteen',
-                17: 'Seventeen',
-                18: 'Eighteen',
-                19: 'Nineteen'
-            }
-            return switcher.get(num)
-        
-        
-        def ten(num):
-            switcher = {
-                2: 'Twenty',
-                3: 'Thirty',
-                4: 'Forty',
-                5: 'Fifty',
-                6: 'Sixty',
-                7: 'Seventy',
-                8: 'Eighty',
-                9: 'Ninety'
-            }
-      
-            return switcher.get(num)
-                 
-        res =[]
-        lvl = ["","Thousand","Million","Billion"]
-        if num ==0:
+        if num == 0: 
             return "Zero"
-        
-        def helper(chunk,level):
-           
-            if chunk == 0: return ""
-            a,b  = divmod(chunk, 100)
-            tmp = []
-            if a :
-                tmp.append(one(a) + " Hundred")
 
-            if b :
-                if 0 < b < 10:
-                    tmp.append(one(b))
-                elif b < 20:
-                    tmp.append(two_less_20(b))
-                else:
-                    a,b = divmod(b,10)
-                    tmp.append(ten(a))
-                    if b:
-                        tmp.append(one(b)) 
-            # print(" ".join(tmp))
-            return " ".join(tmp) + " "+ lvl[i] if i else " ".join(tmp) 
-            
-        i, level = 0,0
+        def under20(num):
+            lst = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine","Ten","Eleven", "Twelve", "Thirteen", "Fourteen","Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
+            return lst[num-1] 
+        def under100(num):
+            lst = ["Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
+            return lst[num]
 
-        
-        while 1:
-            chunk, rem = divmod(num,1000)
-            if rem:
-                res.append(helper(rem,level))
+        chunk_lvl = ["Hundred", "Thousand","Million","Billion"]
+        chunks = [100,1000,1000 ** 2, 1000 ** 3]
+
+
+        def converter(num):
             
-            num = chunk
-            level += 1
-            if chunk ==0:
-                break
-            i +=1
-        
-        return " ".join(res[::-1])
+            if num == 0:
+                return ""
+            if num < 20:
+                return " "+ under20(num)
+            if num < 100:
+                return " "+ under100(num / 10 -2) +converter(num % 10) 
+            
+            for i in range(3,-1,-1):
+                if num >= chunks[i]:
+                    return converter(num / chunks[i]) + " " + chunk_lvl[i] + converter(num % chunks[i])
+            return ""
+        return converter(num)[1:]
