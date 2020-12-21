@@ -5,14 +5,14 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        self.res = []
+        self.res = 0
         def dfs(root,num):
             if not root:return 
             num = num * 10 + root.val
             if not root.right and not root.left:
-                self.res.append(num)
+                self.res += num
                 return 
             dfs(root.right,num)
             dfs(root.left,num)
         dfs(root, 0)
-        return sum(self.res)
+        return self.res
