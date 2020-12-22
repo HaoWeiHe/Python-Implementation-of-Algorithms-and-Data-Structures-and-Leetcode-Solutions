@@ -5,24 +5,29 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
-    def binaryTreePaths(self, root):
+    def pathSum(self, root, sum):
         """
         :type root: TreeNode
-        :rtype: List[str]
+        :type sum: int
+        :rtype: List[List[int]]
         """
-        
-        def dfs(root, path):
+        self.res =[]
+        def dfs(root, record, acc):
             if not root:
                 return 
-            path += str(root.val)
+            
+            record.append(root.val)
+            acc += root.val
             if not root.right and not root.left:
-                self.res.append(path)
+                if acc == sum:
+                    self.res.append(record[:])
+                record.pop()
                 return 
-            else:
-                path += "->"
-                dfs(root.left,path)
-                dfs(root.right, path)
-        
-        self.res = []
-        dfs(root,"")
+            
+            dfs(root.right, record, acc)
+            dfs(root.left,  record, acc)
+            record.pop()
+
+        dfs(root, [],0)
         return self.res
+        
