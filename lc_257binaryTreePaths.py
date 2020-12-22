@@ -18,9 +18,8 @@ class Solution(object):
             
             record.append(root.val)
             acc += root.val
-            if not root.right and not root.left:
-                if acc == sum:
-                    self.res.append(record[:])
+            if not root.right and not root.left and acc ==sum:
+                self.res.append(record[:])
                 record.pop()
                 return 
             
