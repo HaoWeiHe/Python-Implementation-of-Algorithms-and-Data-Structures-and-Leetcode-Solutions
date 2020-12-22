@@ -12,7 +12,7 @@ class Solution(object):
         """
         self.min = float('inf')
         self.res = ""
-        def dfs(root, record, score, lvl):
+        def dfs(root, record):
             if not root:
                 return 
 
@@ -24,11 +24,11 @@ class Solution(object):
                 if record < self.res:
                     self.res = record
                    
-            dfs(root.right, record,score, lvl +1)
-            dfs(root.left, record,score, lvl +1)
+            dfs(root.right, record)
+            dfs(root.left, record)
             
             return root.val
-        dfs(root, "", 0,0)
+        dfs(root, "")
         return self.res
         
         
