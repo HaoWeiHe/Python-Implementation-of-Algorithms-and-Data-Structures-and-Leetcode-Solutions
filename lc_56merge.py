@@ -1,5 +1,5 @@
 class Solution(object):
-    def merge(self, intervals):
+    def merge(self, its):
         """
          [[1,9],[2,6],[8,10],[15,18]]
          1) sort ele[0]
@@ -9,18 +9,17 @@ class Solution(object):
         1,9
         1,10
         """
-        its = sorted(intervals, key = lambda x:(x[0],x[1]))
-        n = len(its)
-        cur_iterval = its[0]
         
-        res = []
+        its.sort(key= lambda x:(x[0],x[1]))
+        n = len(its)
+        stack = [its[0]]
         for i in range(1,n):
-            if cur_iterval[1] >= its[i][0]:
-                cur_iterval[1] = max(its[i][1],cur_iterval[1] )
+            cur = its[i]
+            if stack[-1][1] >= cur[0]:
+                stack[-1][1] = max(cur[1],stack[-1][1] )
             else:
-                res.append(cur_iterval)
-                cur_iterval = its[i]
+                stack.append(cur)
      
-        res.append(cur_iterval)
-        return res
+
+        return stack
             
