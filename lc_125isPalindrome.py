@@ -6,9 +6,9 @@ class Solution(object):
         """
         l,r = 0 , len(s)-1
         while l < r:
-            while not ( s[l].isalpha() or s[l].isdigit() ) and l < r :
+            while not ( s[l].isalnum() ) and l < r :
                 l +=1
-            while  not ( s[r].isalpha() or  s[r].isdigit() )  and l < r :
+            while  not ( s[r].isalnum() )  and l < r :
                 r -=1
             
             if s[r].lower()!=s[l].lower():
