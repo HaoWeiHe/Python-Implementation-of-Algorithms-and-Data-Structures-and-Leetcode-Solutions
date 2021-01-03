@@ -9,16 +9,14 @@ class Solution(object):
         q = deque([e for e in range(n) if e not in inde])
        
    
-        for i in range(n):
-            while q:
-                top = q.popleft()
-                res.append(top)
+        while q:
+            top = q.popleft()
+            res.append(top)
 
-                for e in g[top]:
-
-                    inde[e] -= 1
-                    if inde[e] == 0:
-                        q.append(e)
+            for e in g[top]:
+                inde[e] -= 1
+                if inde[e] == 0:
+                    q.append(e)
                    
        
         if len(res)!= n:
