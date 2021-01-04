@@ -21,7 +21,6 @@ class Solution(object):
            
             if end >= start:
                 res.append([start, end])
-            
             if A[i][1] == B[j][1]:
                 i +=1
                 j +=1
