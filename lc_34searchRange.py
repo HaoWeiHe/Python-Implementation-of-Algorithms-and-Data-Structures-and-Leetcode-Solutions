@@ -1,3 +1,4 @@
+
 class Solution(object):
     """
     find the idx makes all num >= target after num[idx]
@@ -8,10 +9,9 @@ class Solution(object):
             return res
         l, r  = 0, len(nums)
         while l  < r:
+            mid = (l+r) //2
             
-            mid = int((l + r)/2)
-            
-            if nums[mid] > target -1 :
+            if nums[mid] >= target  :
                 r = mid
             else:
                 l = mid + 1
@@ -21,12 +21,12 @@ class Solution(object):
 
         l, r  = 0, len(nums)
         while l  < r:
-            mid = int((l + r)/2)
+            mid = (l+r) //2
             if nums[mid] > target:
                 r = mid
             else:
                 l = mid + 1
-        if l > 0 and nums[l-1] == target:
+        if  l >= 0 and nums[l-1] == target:
             res[1] = l - 1
         
         return res
