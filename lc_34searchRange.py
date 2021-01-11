@@ -5,28 +5,23 @@ class Solution(object):
     """
     def searchRange(self, nums, target):
         res = [-1,-1]
-        if not nums:
-            return res
-        l, r  = 0, len(nums)
-        while l  < r:
-            mid = (l+r) //2
-            
-            if nums[mid] >= target  :
-                r = mid
-            else:
-                l = mid + 1
-        
+        if not nums: return res
+        def helper(flag):
+            l, r  = 0, len(nums)
+            while l  < r:
+                mid = (l+r) //2
+                if nums[mid] > target or (flag and nums[mid] == target) :
+                    r = mid
+                else:
+                    l = mid + 1
+            return l 
+
+        l = helper(True)
         if l < len(nums) and nums[l] == target:
             res[0] = l 
 
-        l, r  = 0, len(nums)
-        while l  < r:
-            mid = (l+r) //2
-            if nums[mid] > target:
-                r = mid
-            else:
-                l = mid + 1
-        if  l >= 0 and nums[l-1] == target:
+        l = helper(False)
+        if  l > 0 and nums[l-1] == target:
             res[1] = l - 1
         
         return res
@@ -44,3 +39,4 @@ class Solution(object):
                     res[0] = idx
                 res[1] = idx
         return res
+Solution().searchRange()
