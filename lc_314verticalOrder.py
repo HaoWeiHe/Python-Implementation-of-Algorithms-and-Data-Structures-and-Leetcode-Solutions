@@ -10,6 +10,26 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
+        if not root:return []
+        d = collections.defaultdict(list)
+        q = deque([(root,0)])
+        _mx,_mn = -sys.maxint, sys.maxint
+        while q:
+            node, lvl = q.popleft()
+            
+            if not node: continue
+            d[lvl].append(node.val)
+            _mx = max(_mx, lvl)
+            _mn = min(_mn, lvl)
+            q.append((node.left, lvl-1))
+            q.append((node.right, lvl+1))
+     
+        return [d[x] for x in range(_mn, _mx+1)]
+    def verticalOrder2(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
         if not root: return []
         d = collections.defaultdict(list)
         def dfs(lvl, node, top):
