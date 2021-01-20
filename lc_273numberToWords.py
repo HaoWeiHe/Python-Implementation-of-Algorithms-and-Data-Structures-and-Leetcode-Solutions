@@ -29,7 +29,7 @@ class Solution(object):
             if num < 20:
                 return " "+ under20(num)
             if num < 100:
-                return " "+ under100(num / 10 -2) +converter(num % 10) 
+                return " "+ under100(num / 10 -2) + converter(num % 10) 
             
             for i in range(3,-1,-1):
                 if num >= chunks[i]:
