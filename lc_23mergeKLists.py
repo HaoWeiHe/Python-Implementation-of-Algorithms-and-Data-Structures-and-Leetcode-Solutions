@@ -21,7 +21,6 @@ class Solution(object):
         
         while True:
             swap = None
-         
             for cur in range(len(lists)):
                 
                 if not lists[cur]: continue
