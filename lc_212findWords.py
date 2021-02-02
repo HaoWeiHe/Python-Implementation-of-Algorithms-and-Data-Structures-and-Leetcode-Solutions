@@ -43,7 +43,7 @@ class Solution(object):
 
         self.res = []
         self.visted_word = set()
-        def dfs(node,x,y,v):
+        def dfs(node,x,y):
          
             if not node:
                 return 
@@ -55,18 +55,20 @@ class Solution(object):
             if node.isWord:
                 self.res.append(node.w)
                 trie.pruning(node.w)
-
+            tmp_ele = board[x][y]
+            board[x][y] = "#"
             for dx, dy in [(0,1),(0,-1),(1,0),(-1,0)]:
                 nx, ny = dx + x, dy + y 
-                if 0 <= nx < m and 0 <= ny < n and (nx,ny) not in v :
-                    dfs(node,nx,ny,v + [(nx,ny)])
-                        
+                if 0 <= nx < m and 0 <= ny < n :
+                    dfs(node,nx,ny)
+            board[x][y] = tmp_ele    
 
         m,n = len(board), len(board[0])           
         root = trie.root
         
         for i in range(m):
             for j in range(n):
-                dfs(root, i,j,[(i,j)])
+                dfs(root, i,j)
 
         return list(set(self.res))
+  
