@@ -4,7 +4,7 @@ class Node():
     def __init__(self):
         self.children = collections.defaultdict(Node)
         self.isWord = False
-        self.w = Node
+        self.w = ""
 class Trie():
     def __init__(self):
         self.root = Node()
@@ -15,7 +15,20 @@ class Trie():
             node = node.children[c]
         node.isWord = True
         node.w = word
-
+    def pruning(self, word):
+        node = self.root
+        parent = None
+        while True:
+            for c in word:
+                parent = node
+                node = node.children[c]
+                
+            if not node.children and word:
+                del parent.children[word[-1]]
+                word = word[:-1]
+            else:
+                break
+           
 class Solution(object):
     def findWords(self, board, words):
         """
@@ -23,25 +36,30 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[str]
         """
+
         trie = Trie()
         for w in words:
             trie.insert(w)
 
         self.res = []
-
+        self.visted_word = set()
         def dfs(node,x,y,v):
+         
             if not node:
                 return 
+
             if board[x][y] not in node.children:
                 return 
+            
             node = node.children[board[x][y]]
             if node.isWord:
                 self.res.append(node.w)
+                trie.pruning(node.w)
 
             for dx, dy in [(0,1),(0,-1),(1,0),(-1,0)]:
                 nx, ny = dx + x, dy + y 
-                if 0 <= nx < m and 0 <= ny < n and (x,y) not in v :
-                    dfs(node,nx,ny,v + [(x,y)])
+                if 0 <= nx < m and 0 <= ny < n and (nx,ny) not in v :
+                    dfs(node,nx,ny,v + [(nx,ny)])
                         
 
         m,n = len(board), len(board[0])           
@@ -49,41 +67,6 @@ class Solution(object):
         
         for i in range(m):
             for j in range(n):
-                dfs(root, i,j,[])
+                dfs(root, i,j,[(i,j)])
 
         return list(set(self.res))
-
-    def findWords2(self, board, words):
-        """
-        :type board: List[List[str]]
-        :type words: List[str]
-        :rtype: List[str]
-        """
-        m,n = len(board), len(board[0])
-        def find(word,i,v,x,y): #test by 0
-
-            if word[i]!=board[x][y]:
-                return False
-
-            if i == len(word)-1: 
-                return True
-
-            res = False
-            for dx, dy in [(0,1),(1,0),(0,-1),(-1,0)]:
-                nx, ny = dx + x, dy + y 
-                if 0 <= nx < m and 0 <= ny < n and (nx,ny) not in v:
-                     res = res or find(word, i+1,v + [(x,y)], nx,ny)
-            return res
-            
-        ans = []                
-        for w in words:
-            flag = True
-            for i in range(m):
-                for j in range(n):
-                    if board[i][j] == w[0] and flag:
-                        if find(w,0,[],i,j):
-                            
-                            flag = False
-                            ans.append(w)
-                            
-        return ans
