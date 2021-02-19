@@ -7,6 +7,28 @@ class Solution(object):
         """
         if not s:
             return 0
+        cs = set()
+        l,r = 0 , 0
+        res = 0 #abcabcbb
+        for cur_idx, cur in enumerate(s): 
+            while cur in cs:
+                
+                cs.remove(s[l])        
+                l +=1
+            
+            res = max(res, cur_idx - l + 1)  
+            
+            cs.add(cur)
+        return res
+
+    def lengthOfLongestSubstring2(self, s):
+        """
+       "abcabcbb"
+         v
+           v
+        """
+        if not s:
+            return 0
         cs = {}
         i = 0 
         res = 0 
@@ -16,6 +38,3 @@ class Solution(object):
             res = max(res, j - i + 1)              
             cs[cur] = j + 1
         return res
-
-s = "abba" #a:1, b:2 b:2
-print(Solution().lengthOfLongestSubstring(s))
