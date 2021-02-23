@@ -4,10 +4,10 @@ class RandomizedSet(object):
 	def __init__(self):
 		"""
 		[1,7,3,9]
-	{1:0, 7:1, 3:2, 9:3}
-	insert: update d and append to list
-	del x: replace tail to idx of x, pop list()
-	random:
+		{1:0, 7:1, 3:2, 9:3}
+		insert: update d and append to list
+		del x: replace tail to idx of x, pop list()
+		random:
 		"""
 		self.lst = []
 		self.d = {}
@@ -28,16 +28,11 @@ class RandomizedSet(object):
 		:rtype: bool
 		"""
 		if val not in self.d: return 0  
-	   	if self.d[val] == len(self.lst) -1:
-	   		self.lst.pop()
-	   		del self.d[val]
-	   		return 1
-		target_idx = self.d[val] #[1,8,7,9] remove: 8 target_idx = 1  target -> [1,9,7] ,update d[9] = 1
-		del self.d[val]
-		swap = self.lst[-1]#swap = 9 ->  
-		self.lst[target_idx] = swap
-		self.d[swap] = target_idx
-		self.lst.pop()
+	   	last_ele, del_idx = self.lst[-1], self.d[val]
+	   	self.d[last_ele] = del_idx
+	   	self.lst[del_idx] = last_ele
+	   	del self.d[val]
+	   	self.lst.pop()
 		
 		return 1
 	
