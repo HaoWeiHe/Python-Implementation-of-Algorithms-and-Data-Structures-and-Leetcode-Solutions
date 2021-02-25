@@ -20,14 +20,19 @@ class MedianFinder(object):
         :type num: int
         :rtype: None
         """
-        idx = bisect.bisect_left(self.lst, num)
-        # l, r = 0, len(self.lst) #[1:r)
-        # while l < r:
-        #     mid = (l+r) / 2
-        #     if num >= self.lst[mid]:
-        #         l = mid +1
-        #     else:
-        #         r = mid - 1
+        #exist g(m) > 0 s.t. x>=m else <=0
+        def bfs(target):
+            l, r = 0, len(self.lst) #[1:r)
+            while l < r:
+                mid = (l+r) / 2 
+                if self.lst[mid] > target : #g(mid) x >=m, g(x) > target
+                    r = mid 
+                else:
+                    l  = mid + 1
+            return l
+
+        idx = bfs(num)
+
         self.lst =self.lst[:idx] +   [num] + self.lst[idx:]
         
 
@@ -44,9 +49,3 @@ class MedianFinder(object):
             
             return self.lst[mid]
         
-
-
-# Your MedianFinder object will be instantiated and called as such:
-# obj = MedianFinder()
-# obj.addNum(num)
-# param_2 = obj.findMedian()
