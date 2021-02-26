@@ -1,51 +1,42 @@
+from heapq import heappush as push, heappop as pop
+
 class MedianFinder(object):
-    """
-    [1,2,3,4]
-     4/2 = 2 (cur, cur - 1)
-    [1,2,3]
-    3/2 = 1 (cur)
-    BST, to lst
-    if len(lst) is even, return avg(mid, mid-1)
-    else: return mid
-    
-    """
+
     def __init__(self):
         """
         initialize your data structure here.
         """
-        self.lst = []
+        self.left = []
+        self.right = []
+        
 
-    def addNum(self, num):
+    def addNum(self, x):
         """
         :type num: int
         :rtype: None
         """
-        #exist g(m) > 0 s.t. x>=m else <=0
-        def bfs(target):
-            l, r = 0, len(self.lst) #[1:r)
-            while l < r:
-                mid = (l+r) / 2 
-                if self.lst[mid] > target : #g(mid) x >=m, g(x) > target
-                    r = mid 
-                else:
-                    l  = mid + 1
-            return l
-
-        idx = bfs(num)
-
-        self.lst =self.lst[:idx] +   [num] + self.lst[idx:]
+        if len(self.right) == len(self.left):
+            push(self.right, x)
+            _min = pop(self.right)
+            push(self.left, -_min)
+        else:
+            push(self.left, - x )
+            _max = pop(self.left)
+            push(self.right, -1*_max) 
         
-
     def findMedian(self):
         """
         :rtype: float
         """
         
-        mid = len(self.lst)/2
-        if len(self.lst)%2 == 0 :
-            
-            return (self.lst[mid] + self.lst[mid-1])/2.0
+        if len(self.right) == len(self.left):
+            return (self.right[0] -  self.left[0])/2.0
         else:
-            
-            return self.lst[mid]
+            return -self.left[0]
         
+
+
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
