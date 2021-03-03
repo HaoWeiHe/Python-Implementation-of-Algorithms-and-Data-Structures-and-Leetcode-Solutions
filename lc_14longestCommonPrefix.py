@@ -15,7 +15,33 @@ class Trie(object):
             node.count += 1
         
 class Solution(object):
+    
+    def lcp(self, strs, l,r):
+        if l == r: return strs[l]
+        mid = (l+r)/2
+        lf = self.lcp(strs, l, mid)
+        rt = self.lcp(strs, mid+1, r)
+        return self.commonpredix(lf,rt)
+    
+    def commonpredix(self, lf,rt):
+        lgth = min(len(lf), len(rt))
+        for i in range(lgth):
+            if lf[i]!= rt[i]:
+                return lf[:i]
+        return lf[:lgth]
+
     def longestCommonPrefix(self, strs):
+        """
+         ["flower","flow","flight"]
+res =      "flower","flo", "fl"
+        """
+        if not strs:
+            return ""
+        return self.lcp(strs, 0, len(strs) - 1)
+            
+
+
+    def longestCommonPrefix3(self, strs):
         """
         :type strs: List[str]
         :rtype: str
