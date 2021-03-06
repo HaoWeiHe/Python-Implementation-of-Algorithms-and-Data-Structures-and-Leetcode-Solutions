@@ -3,36 +3,33 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-
 class Solution(object):
-    def reverseBetween(self, head, m, n):
+    def reverseBetween(self, head, left, right):
         """
-
-        """
-        pre, dummy, hold = ListNode(None), head, None
-        pre_head = ListNode(None)
-        counter = 1
-        lst  = []
+        1   2   3   4   5   6
+        prv cur next
+        1<-2
+  
+        1   3   2   4   5   6
+                cur next
+                
+        1   4   3   2   5   6
         
-        while dummy:
-            if counter < m:
-                pre = dummy
-            if m <= counter <n:
-                lst.append(dummy)   
-                
-            if counter == n:
-                
-                hold = dummy.next
-                if pre.val == None:
-                    head = dummy
-                pre.next = dummy
-                pre = pre.next
-                while lst:
-                    pre.next = lst.pop()
-                    pre = pre.next
-                pre.next = hold
-    
-                return head 
-            counter +=1
-            
-            dummy = dummy.next
+        """
+          
+        if not head :return head
+        dummy = ListNode()
+        dummy.next = head
+        prev = dummy
+        
+        for i in range(left-1):
+            prev = prev.next
+        cur = prev.next
+        
+        for _ in range(right-left ):
+            next = cur.next
+            cur.next = next.next
+            next.next = prev.next
+            prev.next = next
+       
+        return dummy.next
