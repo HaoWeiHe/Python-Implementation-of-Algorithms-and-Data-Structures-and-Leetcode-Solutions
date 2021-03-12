@@ -4,9 +4,8 @@ class HitCounter(object):
         """
         Initialize your data structure here.
         """
-        # 0           here
-        
-        self.time = collections.defaultdict(int)
+        self.q = deque()
+
     def hit(self, t):
         """
         Record a hit.
@@ -14,8 +13,9 @@ class HitCounter(object):
         :type timestamp: int
         :rtype: None
         """
+        self.q.append(t)
         
-        self.time[t] += 1
+
     def getHits(self, t):
         """
         Return the number of hits in the past 5 minutes.
@@ -23,12 +23,10 @@ class HitCounter(object):
         :type timestamp: int
         :rtype: int
         """
-        res = 0 
-        
-        for i in range(max(0, t-300+1), t+1):
-            res += self.time[i]
-        return res
-        
+        lower = t - 300 + 1
+        while self.q and self.q[0] < lower:
+            self.q.popleft()
+        return len(self.q)
 
 
 # Your HitCounter object will be instantiated and called as such:
