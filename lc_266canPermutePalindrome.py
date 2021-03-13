@@ -1,18 +1,12 @@
 class Solution(object):
     def canPermutePalindrome(self, s):
         """
-        abba
-        aba
-        
-        allow at most one single char
-        others should be pairs
+        alp is paired, can have at most one unpair
         """
-        c  = collections.Counter(s)
-        flag = 0
-        for char, counter in c.items():
-            
-            if counter % 2 ==1:
-                flag +=1
-            if flag == 2:
-                return False
+        c = Counter(s)
+        up = 0
+        for i in c.values():
+            if i%2 != 0:up+=1
+            if up > 1:return False
         return True
+        
