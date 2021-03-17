@@ -1,5 +1,20 @@
+
 class Solution(object):
     def minCost(self, s, cost):
+        """
+        :type s: str
+        :type cost: List[int]
+        :rtype: int
+        """
+        res, maxcost = 0, 0
+        for idx, val in enumerate(s):
+            if idx > 0 and s[idx] != s[idx-1]:
+                maxcost = 0
+            res += min(maxcost, cost[idx])
+            maxcost = max(maxcost, cost[idx])
+        return res
+            
+    def minCost2(self, s, cost):
         """
          "abaac"
               l 
