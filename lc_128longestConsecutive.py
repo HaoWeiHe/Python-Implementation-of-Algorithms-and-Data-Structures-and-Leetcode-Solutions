@@ -1,6 +1,28 @@
 class Solution(object):
     def longestConsecutive(self, nums):
         """
+        [100,4,200,1,3,2]
+        
+        """
+        
+        h = set(nums)
+        tmp, ans = 0,0
+        for e in h:
+            if e -1 not in h:
+                tmp = 0
+
+                c = 0
+
+                while e + c in h:
+                    tmp += 1
+                    c += 1
+
+                ans = max(ans, tmp)
+        return ans
+                
+        
+    def longestConsecutive3(self, nums):
+        """
        [100,4,200,1,3,2]
        [1,2,3,4,100,200]
     tmp 1 
