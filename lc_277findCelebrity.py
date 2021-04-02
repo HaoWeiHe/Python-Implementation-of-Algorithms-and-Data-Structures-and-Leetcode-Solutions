@@ -1,8 +1,4 @@
-# The knows API is already defined for you.
-# @param a, person a
-# @param b, person b
-# @return a boolean, whether a knows b
-# def knows(a, b):
+from functools import lru_cache
 
 class Solution(object):
     def findCelebrity(self, n):
@@ -11,8 +7,12 @@ class Solution(object):
         :rtype: int
         """
         candidate = 0 
+        @lru_cache()
+        def history_know(self,a,b):
+            return knows(a,b)
+
         for i in range(1,n):
-            if knows(candidate,i):
+            if history_know(candidate,i):
                 candidate = i
         
         for i in range(n):
