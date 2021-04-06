@@ -1,5 +1,21 @@
+
 class Solution(object):
     def maxScore(self, lst, k):
+        """
+        [1,79,80,1,1,1,200,1]
+        v v v v (4,0)
+        [1,79,80,1,1,1,200,1]
+         v v   v           v (3,1)           
+         [1,79,80,1,1,1,200,1]
+          v v            v  v (2,2)
+
+        """
+        best = score = sum(lst[:k])
+        for i in range(1,k + 1):
+            score =  score - lst[k-i] + lst[-i]
+            best = max(best, score)
+        return best
+    def maxScore2(self, lst, k):
         """
         [1,2,3,4,5,6,1],
          i     j
