@@ -1,6 +1,38 @@
 class Solution(object):
     def insert(self, intervals, newInterval):
         """
+        [[1,3],[6,9]]
+        [2,5]
+        
+        [1,3] [2,5] [6,9]
+        insert idx, where valofidx.start  > newInterval.start
+        
+         [1,3] [2,5] [6,9]
+         at the begin res = [[1,3]]
+         if res[-1].end < now.end, update the last on res
+         else:
+            append res
+        """
+        if not intervals:
+            return [newInterval]
+        pos  = 0 
+        while pos < len(intervals):
+            if intervals[pos][0] > newInterval[0]:
+                break
+            pos += 1
+        intervals = intervals[:pos] + [newInterval] + intervals[pos:]
+        
+        res = [intervals[0]]
+        # [[1, 2], [3, 5], [4, 8], [6, 7], [8, 10], [12, 16]]
+        for e in intervals[1:]:
+            if res[-1][1] >= e[0]:
+                res[-1][1] = max(res[-1][1], e[1])
+            else:
+                res.append(e)
+        return res
+        
+        def insert2(self, intervals, newInterval):
+        """
        1) insert newInterval into 
        2) merge this intervals
        
