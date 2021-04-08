@@ -4,6 +4,25 @@ class Solution(object):
         [[1,3],[6,9]]
         [2,5]
         
+       rt: cur.end < new.start 
+       merge: overlap, 
+       lf: new.end < cur.start
+       
+        """
+        rt, lf = [],[]
+        for e in intervals:
+            if e[1] < newInterval[0]:
+                lf.append(e)
+            elif newInterval[1] < e[0] :
+                rt.append(e)
+            else:
+                newInterval = [min(newInterval[0],e[0]), max(newInterval[1],e[1])]
+        return lf + [newInterval] + rt
+    def insert3(self, intervals, newInterval):
+        """
+        [[1,3],[6,9]]
+        [2,5]
+        
         [1,3] [2,5] [6,9]
         insert idx, where valofidx.start  > newInterval.start
         
