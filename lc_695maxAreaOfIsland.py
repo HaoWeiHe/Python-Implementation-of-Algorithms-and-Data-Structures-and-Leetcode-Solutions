@@ -1,4 +1,31 @@
 class Solution(object):
+    def maxAreaOfIsland2(self, g):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        m,n = len(g), len(g[0])
+      
+        
+        def dfs(i,j):
+            if 0 <= i < m and  0 <= j < n and g[i][j]==1:
+                g[i][j] = "#"
+                
+                return  1+ dfs(i-1,j) + dfs(i,j-1) + dfs(i+1,j)  + dfs(i,j+1) 
+                
+            else: 
+                return 0
+                    
+            
+            
+        ans = 0        
+        for i in range(m):
+            for j in range(n):
+                if g[i][j] == 1:
+                    
+                    
+                    ans  = max(ans,dfs(i,j))
+        return ans
     def maxAreaOfIsland(self, g):
         """
         :type grid: List[List[int]]
