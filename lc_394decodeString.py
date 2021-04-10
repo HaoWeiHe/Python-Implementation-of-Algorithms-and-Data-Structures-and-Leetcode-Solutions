@@ -1,4 +1,32 @@
 class Solution(object):
+    def decodeString2(self, lst):
+        """
+        3[a2[bc]]
+        s = 3[a2[bc
+        s = 3[abcbc
+        """
+        s = []
+        for e in lst:
+            if e == "]":
+                top = e
+                lst = []
+                while top!= "[":
+                    top = s.pop()
+                    lst.append(top)
+                lst = lst[:-1]
+                num = ""
+                while s and s[-1].isdigit():
+                    top = s.pop()
+                    num =  top + num
+                    
+                tmp = int(num)*lst
+                while tmp:
+                    s.append(tmp.pop())
+                num = 0
+            else:
+                s.append(e)
+        return "".join(s)
+                
     def decodeString(self, s):
         """
          
