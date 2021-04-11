@@ -16,6 +16,7 @@ class Solution(object):
         dp[i][0~6]: wordlist[i][n] = lst. the context of lst is the elements whoes have the number n's overlap character whith lst[i]
         
         """
+        #dp[i][c]
         dp = [[[] for i in range(7)] for _ in range(len(wordlist))]
         for i, e in enumerate(wordlist):
             for j in range(len(wordlist)):
@@ -26,14 +27,22 @@ class Solution(object):
                         c +=1
                 dp[i][c].append(wordlist[j])
                 
-        _map = {value:key for key, value in enumerate(wordlist)}
+        _map = {w:idx for idx, w in enumerate(wordlist)}
         def getovelap(A,B):
             return list(set(A).intersection(set(B)))
         
-        for _ in range(10):
+        res = 0 
+        while res < 6:   
             if len(wordlist) ==0: break
-            e = wordlist[0]
+            tmp = ""
+            _mn,cans = float('inf'), None
+            for ele in wordlist:
+                tmp = max([ len(dp[_map[e]][i]) for i in range(7)])
+                if  tmp < _mn:
+                    _mn = tmp
+                    cans = ele
+            e = cans
             res = master.guess(e)
-            _map[e]
+            
             wordlist = getovelap(wordlist,dp[_map[e]][res]) #get the overlap one
             
