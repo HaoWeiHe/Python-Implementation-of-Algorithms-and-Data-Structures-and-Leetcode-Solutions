@@ -1,4 +1,18 @@
 class Solution(object):
+    def longestStrChain2(self, words):
+        """
+        ["a","b","ba","bca","bda","bdca"]
+        a = 1
+        b = 1
+        ba = [a,b]
+        bca = []
+    """
+        g = defaultdict(int)
+        for w in sorted(words, key = lambda x : len(x)):
+            g[w] = 1
+            for i in range(len(w)):
+                g[w] = max(g[w], g[w[:i] + w[i+1:]] + 1)
+        return max(g.values())
     def longestStrChain(self, words):
         """
         a - ba
