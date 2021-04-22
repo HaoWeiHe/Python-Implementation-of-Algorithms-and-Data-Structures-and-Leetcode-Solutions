@@ -1,52 +1,34 @@
 class Solution(object):
     def addBoldTag(self, s, dict):
         """
-         ["aaa","aab","bc"]
-         "aaabbcc"
-          0123456
-         [(0,4], ]
-         top[1] <= idx-length, update to idx
-         
-         ["abc","123"]
-         "abcxyz123"
-          012345678
-         [(0,3) (idx-len, idx)]
-         
-        """
+        bold = [False, False, False]
+        check i + len(w) for i in range(len(s))
+        #we get bold list
+        [False, True, True, False, False]
         i = 0
-        stack = []
-        while i <=len(s):
-           
-            for w in dict:
-                if len(w) > i : continue
-                start = float('inf')
-                end = float('-inf')
-                if s[i-len(w):i] ==w:
-                    # [(37, 364), (94, 498), (367, 620)]
-                    while stack and stack[-1][1] >= i - len(w):
-                        
-                        start,end  = stack.pop()
-
-                    stack.append((min(start, i - len(w)), i))
-                    i = max(i,end-1)
- 
-            
-            i += 1
-        print(stack)
+        1) while i is vaild, marked and update i (i ++ until False)
+        2) else append(s[i]) to ans
         """
-        #[0,3], [6,9]
-         i:0  +  i: 3, update i = 3+ 1 =4
-        i = 0
-        top = stack.pop(0)
-        ans = ans + s[top[0]:top[1]]
-        i = top[1]+1
-        """
-        i = 0 
+        bold = [0] * len(s)
+        for w in dict:
+            start = s.find(w)
+            while start != -1:
+                for i in range(start, start + len(w)):
+                    bold[i] = 1
+                start = s.find(w, start + 1)
         ans = ""
-        while stack:
-            start, end = stack.pop(0)
-            ans = ans + s[i: start] + "<b>" +s[start:end] + "</b>" 
-           
-            i = end
-        ans = ans + s[i:]
+        i = 0
+        while i < len(s):
+            if bold[i]:
+                ans += "<b>"
+                while i < len(s) and bold[i]:
+                    ans  = ans + s[i]
+
+                    i += 1
+                ans += "</b>"
+            else:
+                ans += s[i]
+                i += 1
         return ans
+s, dict ="abcxyz123", ["abc","123"]
+print(Solution().addBoldTag(s,dict))
