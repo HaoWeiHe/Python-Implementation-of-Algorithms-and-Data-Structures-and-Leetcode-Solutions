@@ -18,12 +18,15 @@ class SnapshotArray(object):
         """
         
         self.d[self.snapid][index] = val
-    
+       
     def snap(self):
         """
         :rtype: int
         """
+        
         self.snapid += 1
+        self.d[self.snapid] = {k:v for k,v in self.d[self.snapid-1].items()}
+        
         return self.snapid -1
     def get(self, index, snap_id):
         """
@@ -31,9 +34,11 @@ class SnapshotArray(object):
         :type snap_id: int
         :rtype: int
         """
-        for i in range(snap_id, -1, -1):
-            if index in self.d[i]:
-                return self.d[i][index] 
+        # for i in range(snap_id, -1, -1):
+        #     if index in self.d[i]:
+  
+        if index in self.d[snap_id]:
+            return self.d[snap_id][index] 
         return 0
 
 
