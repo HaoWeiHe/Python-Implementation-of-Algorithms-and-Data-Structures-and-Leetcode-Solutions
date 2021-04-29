@@ -1,36 +1,23 @@
-from collections import defaultdict
+
 class Solution(object):
     def minDifficulty(self, jobDifficulty, d):
         """
-        dfs unti i is lastest and d == 2
-        A = i is lastest 
-        B = d ==2
-        if A or B:
-            if A and B:
-                cmp the ans
-                return 
-            else:
-                return float('inf')
+        dp[j][k]: the min cost of k day and j jobs
         """
-        self.ans = float('inf')
-        def dfs(i,cur,lst):
-            if cur > d:return 
-            if i == len(jobDifficulty):
-                if cur == d :
-                    self.ans = min(self.ans,sum([max(v) for v in lst.values() if v]) + sum(jobDifficulty[i:]))
-                return 
-            
-            if cur > 1 and lst[cur-1]==[]:
-                return
-            lst[cur].append(jobDifficulty[i])
-            dfs(i + 1, cur , lst)
-            lst[cur].pop()
-            
-            #keep cur in previoust  bucket
-            if cur > 1 and lst[cur-1]==[]:return 
-            lst[cur + 1].append(jobDifficulty[i])
-            dfs(i +1, cur + 1 , lst)
-            lst[cur+1].pop()
+        n = len(jobDifficulty)
+        if d > n:
+            return -1
        
-        dfs(0,1,defaultdict(list))
-        return  -1 if self.ans == float('inf') else self.ans
+        dp = [[float('inf') ] * (d+1) for _ in range(n+1)]
+        dp[0][0] = 0
+        
+        for i in range(1, n + 1):
+            
+            for k in range(1, d + 1):            
+                tmp = 0
+                for j in range(i-1,k-2,-1):
+                    tmp = max(tmp,jobDifficulty[j])
+                    dp[i][k] = min(dp[i][k], dp[j][k-1] + tmp)
+        
+        return dp[n][d]
+    
