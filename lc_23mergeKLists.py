@@ -4,38 +4,39 @@
 #         self.val = val
 #         self.next = next
 class Solution(object):
-    def mergeKLists(self, lists):
+    def mergeKLists(self, lsts):
         """
         :type lists: List[ListNode]
         :rtype: ListNode
-           [
-              1->4->5,
-              1->3->4,
-              2->6
-            ]
-        h -> 1 
-        end if all pointer is None
         """
-        dum = ListNode()
-        res = dum
+        if not lsts:return None
+        if len(lsts) == 1: 
+            return lsts[0]
+        mid = len(lsts) /2
+        leftpart =  self.mergeKLists(lsts[:mid])
+        rightpart = self.mergeKLists(lsts[mid:])
+        return self.merge(leftpart, rightpart)
+    
+    def merge(self, lf, rt):
         
-        while True:
-            swap = None
-            for cur in range(len(lists)):
-                
-                if not lists[cur]: continue
-                
-                if swap is None:
-                    swap = cur
-                if lists[swap].val > lists[cur].val:
-                    swap = cur
-           
-            if swap == None:
-                return res.next
-            
-            tmp = lists[swap].next
-            lists[swap].next = None
-            dum.next = lists[swap]
-            dum = dum.next
-            lists[swap] = tmp
-          
+        dum = head = ListNode()
+        while lf and rt:
+
+            if lf.val < rt.val:
+                head.next = lf
+                lf = lf.next
+            else:
+                head.next = rt
+                rt =rt.next
+            head = head.next
+        while lf:
+            head.next = lf
+            lf = lf.next
+            head = head.next
+        
+        while rt:
+            head.next = rt
+            rt = rt.next
+            head = head.next
+        return dum.next
+         
