@@ -58,7 +58,7 @@ class LFUCache(object):
         if key in self.D:
             self.D[key].val = value
             self.get(key)
-            return 
+            return  
        
         if len(self.D) == self.capacity:
             k, n = self.F[self.minF].popitem(last=False)
