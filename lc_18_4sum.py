@@ -6,31 +6,43 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         nums.sort()
-        ans = []
-        def thresssum(nums, ori):
-            new_target = target - ori
-            ans = set()
-            for i, val1 in enumerate(nums):
-                if i == 0 or nums[i-1]!= nums[i]:
-                    lo, hi = i+1, len(nums)-1 
-                    while lo < hi:
-                        cur_sum = ori + nums[i] + nums[lo] + nums[hi]
-                        if cur_sum > target:
-                            hi -=1
-                        elif cur_sum < target:
-                            lo +=1
-                        else:
-                            ans.add(tuple([ori,nums[i], nums[lo], nums[hi]]) )
-                            lo +=1
-                            hi -=1
+
+        def twosum(nums, target):
+            ans = []
+            lo, hi = 0, len(nums) - 1
+            while lo < hi:
+                if lo  !=0 and nums[lo] == nums[lo-1]:
+                    lo += 1
+                    continue
+                if hi < len(nums) - 1 and nums[hi] == nums[hi+1]:
+                    hi -= 1
+                    continue
+                if nums[lo] + nums[hi] < target:
+                    lo += 1
+                elif nums[lo] + nums[hi] > target:
+                    hi -=1
+                else:
+                    ans.append([nums[lo], nums[hi]])
+                    lo += 1
+                    hi -= 1
+
             return ans
-        
-        for i,val1 in enumerate(nums):
-            if i == 0 or val1!= nums[i-1]:
-                res = thresssum(nums[i+1:], val1)
-                if res:
+
+        def ksum(nums, k,target):
+
+            ans = []
+            if not nums or target > nums[-1]*k or target < nums[0]*k:
+                return []
+            if k == 2:
+                return twosum(nums, target)
+            for i,val1 in enumerate(nums):
+                if i == 0 or val1!= nums[i-1]:
+                    for e in  ksum(nums[i+1:], k - 1, target - val1):
+                        ans.append(e + [val1])
+
                     
-                    ans += res
-        return ans
-        
-                
+            return ans
+        return ksum(nums, 4,target)
+[[-2,-1,1,2],[-1,-1,1,1]]
+nums, target = [-2,-1,-1,1,1,2,2], 0
+print(Solution().fourSum(nums, target))
