@@ -1,46 +1,76 @@
-from heapq import heappop as pop, heappush as push
+class Node():
+    def __init__(self,k,v,t):
+        self.prev = None
+        self.next = None
+        self.val = v
+        self.key = k
+        self.time  = t 
+        
+class LinkedList():
+    def __init__(self):
+        self.head =  Node(None,None, -1)
+        self.tail = Node(Node,None, 10**7 + 1)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.head.prev = None
+        self.tail.next = None
+        self.minT = None
+        self.maxT = None
+
 class TimeMap(object):
-    """
-    1.heapq
-    2. double linkedin list + search the bondary
-     
-    """
+
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self.ts = [] #[(t, key, val)]
+        self.lst = LinkedList()
         
 
-    def set(self, k, v, t):
+    def set(self, key, value, timestamp):
         """
-        :type key: str
-        :type value: str
-        :type timestamp: int
-        :rtype: None
+            A  B - C
+              v
+            tmp = B
+            A.next = new
+            new.pre = A
+            v.next = tmp
+            tmp.prev = V
+        
+        A B C tail
+         ^
         """
-        push(self.ts,(t,k,v))
+
+        cur = self.lst.tail
+        while cur :
+            if cur.time < timestamp: #insert behind this #cur = A
+                tmp = cur.next
+                new = Node(key,value, timestamp)
+                cur.next = new
+                new.prev = cur
+                new.next = tmp
+                tmp.prev = new
+                break
+            cur= cur.prev
+        
         
 
     def get(self, key, timestamp):
         """
-        :type key: str
-        :type timestamp: int
-        :rtype: str
+        A B C 
+          v
+          start here
         """
-        ans = ""
-        poped_lst = []
-        while self.ts:
-            t,k,v = pop(self.ts)
-            poped_lst.append((t,k,v))
-            if t > timestamp:
-                break
-            if k == key:
-                ans = v
-        while poped_lst:
-            push(self.ts,poped_lst.pop())
-        return ans
-                
+        cur = self.lst.tail
+        while cur and cur.time > timestamp:
+            
+            cur = cur.prev
+        while cur:
+            if cur.key == key:
+                return cur.val
+            cur = cur.prev
+        return ""
+            
+            
         
 
 
