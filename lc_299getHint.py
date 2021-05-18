@@ -1,29 +1,30 @@
+from collections import Counter
 class Solution(object):
     def getHint(self, secret, guess):
         """
-        1123
-        0111
-         AB
-        pos = {1}
-       
-        i in range(n) i not in pos
-        cmpar if 1 in secret
-step 1 0
-step 2 1, 1 in {} push idx 1 in secret
-stp2 3 1, 1 in 2,3
+        [1,2,3,1]
+        [0,1,1,1]
+               v 
+        {1:2, 2:1,3:1} 0A0B
+        {1:1, 2:1,3:1} 0A1B
+        {1:0, 2:1,3:1} 0A2B
+        {1:0, 2:1,3:1} 1A1B
+        
         """
-        pos = set()
-        candidate = []
-        B_num = 0 
-        for i in range(min(len(secret), len(guess))):
-            if secret[i] == guess[i]:
-                pos.add(i)
-            else:
-                candidate.append(secret[i])
-        for i in range(min(len(secret), len(guess))):
-            if i in pos:
+        c = Counter(secret)
+        A,B = 0,0
+        for i, v in enumerate(guess):
+            if v not in c:
                 continue
-            if guess[i] in candidate:
-                B_num +=1 
-                candidate.remove(guess[i])
-        return str(len(pos)) + "A" + str(B_num) + "B"
+            if secret[i] == v:
+                if c[v] == 0:
+                    B -= 1
+                else:
+                    c[v] -= 1
+                A += 1
+            else: 
+                if c[v] ==0:
+                    continue  
+                c[v]-= 1
+                B += 1
+        return str(A) + "A" + str(B) + "B"
