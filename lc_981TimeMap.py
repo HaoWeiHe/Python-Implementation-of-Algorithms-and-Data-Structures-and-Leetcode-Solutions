@@ -1,78 +1,40 @@
-class Node():
-    def __init__(self,k,v,t):
-        self.prev = None
-        self.next = None
-        self.val = v
-        self.key = k
-        self.time  = t 
-        
-class LinkedList():
-    def __init__(self):
-        self.head =  Node(None,None, -1)
-        self.tail = Node(Node,None, 10**7 + 1)
-        self.head.next = self.tail
-        self.tail.prev = self.head
-        self.head.prev = None
-        self.tail.next = None
-        self.minT = None
-        self.maxT = None
-
+#binary search with defulatdict[list]
 class TimeMap(object):
 
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self.lst = LinkedList()
+        self.d = defaultdict(list)
         
 
     def set(self, key, value, timestamp):
         """
-            A  B - C
-              v
-            tmp = B
-            A.next = new
-            new.pre = A
-            v.next = tmp
-            tmp.prev = V
-        
-        A B C tail
-         ^
+        :type key: str
+        :type value: str
+        :type timestamp: int
+        :rtype: None
         """
-
-        cur = self.lst.tail
-        while cur :
-            if cur.time < timestamp: #insert behind this #cur = A
-                tmp = cur.next
-                new = Node(key,value, timestamp)
-                cur.next = new
-                new.prev = cur
-                new.next = tmp
-                tmp.prev = new
-                break
-            cur= cur.prev
-        
-        
+        self.d[key].append((value, timestamp))
 
     def get(self, key, timestamp):
         """
-        A B C 
-          v
-          start here
+        :type key: str
+        :type timestamp: int
+        :rtype: str
         """
-        cur = self.lst.tail
-        while cur and cur.time > timestamp:
-            
-            cur = cur.prev
-        while cur:
-            if cur.key == key:
-                return cur.val
-            cur = cur.prev
-        return ""
-            
-            
+        lst = self.d[key]    
+        l, r = 0, len(lst)
+        while l < r:
+            m = (l+r)/2
+            if self.d[key][m][1] >timestamp:
+                r = m
+            else:
+                l = m + 1
         
-
+        if r == 0:
+            return ""
+        return self.d[key][l-1][0]
 
 # Your TimeMap object will be instantiated and called as such:
 # obj = TimeMap()
