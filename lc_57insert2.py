@@ -1,5 +1,29 @@
 class Solution(object):
-    def insert(self, its, target):
+    def insert(self, intervals, newInterval):
+        """
+        [[1,3],[2,5], [6,9]]
+        
+        
+        
+        """
+        i = 0 
+        for idx, e in enumerate(intervals) :
+            if  e[0] < newInterval[0]:
+                i += 1
+            else:
+                break
+        intervals = intervals[:i] + [newInterval] + intervals[i:]
+        ans = []
+       
+        for e in intervals:
+
+            if not ans or ans[-1][-1] < e[0]:
+                ans.append(e)
+            else:
+                ans[-1][1] = max(ans[-1][1], e[1])
+        return ans
+      
+    def insert2(self, its, target):
         """
        [[1,2],[3,5],[6,7],[8,10],[12,16]]
 top = [1,2]   [1,5]
