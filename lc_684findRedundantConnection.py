@@ -21,7 +21,7 @@ class UnionFind():
         if u != self.parent[u]:
             self.parent[u] = self.find(self.parent[u])
         return self.parent[u]
-
+  
 class Solution(object):
     def findRedundantConnection(self, edges):
         """
