@@ -43,6 +43,8 @@ class Solution(object):
        
         for idx, w in enumerate(w1):
             uid, vid = g.get(w1[idx], -1), g.get(w2[idx], -1)
+            if w == w2[idx]:
+                continue
           
             if uid == -1 or vid == -1:
                 return False
