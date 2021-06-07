@@ -6,6 +6,22 @@
 class Solution(object):
     def deleteDuplicates(self, head):
         """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        h = set()
+        cur, prev = head, None
+        while cur:
+            if cur.val in h:
+                prev.next = cur.next
+            else:
+                prev = cur
+            h.add(cur.val)
+            cur = cur.next
+        return head
+        
+    def deleteDuplicates2(self, head):
+        """
         1 1 1 1 2
         p       c
                 p
