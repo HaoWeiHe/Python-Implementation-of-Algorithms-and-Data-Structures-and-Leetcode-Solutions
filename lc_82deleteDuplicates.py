@@ -1,10 +1,37 @@
+
 # Definition for singly-linked list.
 # class ListNode(object):
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
 class Solution(object):
-    def deleteDuplicates(self, head):
+    def deleteDuplicates(self, h):
+        """
+         # [1,2,3,3,4,4,5,6]
+         #                h
+         #    p ------->5  
+         #              p
+
+         [1,2,3,3,4,4,5,6]
+                         h
+            p-------> 5
+                      p
+        """
+        
+        dummy = ListNode(None, h)
+        pre = dummy
+        while h:
+            if h.next and h.val == h.next.val:
+                while h.next and h.val == h.next.val:
+                    h = h.next
+                pre.next  = h.next
+            else:
+                pre = h
+
+            h = h.next
+        return dummy.next
+
+    def deleteDuplicates2(self, head):
         """
         [1,2,3,3,4,4,5]
    c                 v
@@ -20,6 +47,7 @@ class Solution(object):
         dummy = ListNode(None, head)
         prev, cur = dummy, head
         h = {}
+
         while cur :
             if cur.val in h:
                 prev = h[cur.val]
