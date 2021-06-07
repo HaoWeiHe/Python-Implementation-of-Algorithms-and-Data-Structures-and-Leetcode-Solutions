@@ -6,6 +6,30 @@
 class Solution(object):
     def removeNthFromEnd(self, head, n):
         """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        dummy = ListNode(None, head)
+        self.prev, self.d = dummy, None
+        
+        def dfs(node):
+            if not node:
+                return 0
+            
+            i = dfs(node.next) + 1
+            if i == n:
+                self.d = node
+            if i == n+1:
+                self.prev = node
+            return i
+        dfs(head)
+        
+        self.prev.next = self.d.next
+        return dummy.next
+
+    def removeNthFromEnd2(self, head, n):
+        """
         1) use recursive
         2) use iterated
         """
