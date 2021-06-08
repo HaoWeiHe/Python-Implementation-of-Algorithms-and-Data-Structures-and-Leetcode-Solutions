@@ -24,11 +24,8 @@ class Solution(object):
                 if tkn == "*":
                     s.append(a * b)
                 if tkn == "/":
-                    if a*b >= 0:
-                        s.append( a/b )
-                    if a*b < 0:
-                        s.append(-1* (abs(a)/ abs(b)))
-                    print(a,b,s)
+                    s.append(int(float(a)/b))
+               
             else:
                 s.append(int(tkn))
         
