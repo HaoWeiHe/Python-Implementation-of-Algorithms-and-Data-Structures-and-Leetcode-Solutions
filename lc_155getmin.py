@@ -11,6 +11,7 @@ class MinStack(object):
         """
         self.q = []
         self.m = []
+        self.counter = 0 
         
 
     def push(self, val):
@@ -18,20 +19,24 @@ class MinStack(object):
         :type val: int
         :rtype: None
         """
+        self.counter += 1
         self.q.append(val)
         if self.m:
-            _min = min(val, self.m[-1])
+            if (self.m[-1][0]) > val:
+                self.m.append((val, self.counter))
         else:
-            _min = val
-        self.m.append(_min)
+            self.m.append((val, self.counter))
         
 
     def pop(self):
         """
         :rtype: None
         """
+        self.counter -= 1
         ans = self.q.pop()
-        self.m.pop()
+        if self.m[-1][1] > self.counter:
+            self.m.pop()
+            
         return ans 
 
     def top(self):
@@ -44,7 +49,7 @@ class MinStack(object):
         """
         :rtype: int
         """
-        return self.m[-1]
+        return self.m[-1][0]
         
 
 
