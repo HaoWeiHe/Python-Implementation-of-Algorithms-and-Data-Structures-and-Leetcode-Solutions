@@ -1,6 +1,69 @@
-from collections import deque
 class Solution(object):
     def calculate(self, s):
+        """
+        s = "((1-(6+-18) -+ 3) - 14)"
+              v  
+        ) 14 - ) 3 + ) 18 +- 6 >> pop until )
+        ) 14 - ) 3 + ) 18 +- 6 , a = pop(), peak top and pop, b = pop, after compute, put back to stack
+        ) 14 - ) 3 +  12 - 1 (
+        ) 14 - ) 3 + 11 (
+        ) 14 - 14 (
+        
+        (7-8+9) ->  )9+8-7(
+        [)9+8-7]
+         
+        7 - 8
+        res = pop
+
+        """
+        num = ""
+        stack = []
+        def eva_expr(stack):
+            if stack[-1] == "+":
+                stack.pop()
+            neg = 1
+            if stack[-1] == "-":
+                stack.pop()
+                neg = -1
+            res = neg*int(stack.pop()) if stack else 0 
+            op = ""
+            while stack and stack[-1] != ")" :
+                top = stack.pop()
+                if not top.lstrip("-").isdigit():
+                    op = op + top
+                else:
+                    if op in ["++", "--","+"]:
+                        res += int(top)
+                    if op in ["+-", "-+","-"]:
+                        res -= int(top)
+                    op = ""
+            
+            return str(res)
+
+        for idx in range(len(s)-1,-1,-1):
+            e = s[idx]
+            if e == " ":
+                continue
+            if e.isdigit():
+                num = e + num
+                continue
+            if num :
+                stack.append(num)
+                num = ""
+            if e == "(":
+                tmp_res = eva_expr(stack)
+                stack.pop()
+                stack.append(tmp_res)
+            else:
+                stack.append(e)
+
+        if num:
+            stack.append(num)
+        
+        return eva_expr(stack)
+
+            
+    def calculate2(self, s):
         """
         removed if i ==0 and s[i] =  "+" 
          " 7*0-8 + (1+(4+5+2)-3)+3+5-(6+8)-5"
