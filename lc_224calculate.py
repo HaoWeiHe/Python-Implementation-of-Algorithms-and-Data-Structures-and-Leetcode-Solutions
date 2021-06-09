@@ -1,6 +1,50 @@
 class Solution(object):
     def calculate(self, s):
         """
+        if inner: sign delay happen (sign * op)
+        else: sign always can be assign (sign = op)
+        (13-(4+5-2)) + 6 -2
+                      ^
+                     
+        res = 0 
+        num = 0 
+        (
+        count = 1
+        sign = 1
+        num = 13
+        res +=  sign * 13 =13 (inner, count!=0)
+        
+        4 - (2-6+8-(3+4))
+        first counter = -1
+        [-1, +1] 
+        """
+        res, num, sign = 0, 0 , 1
+        counter = 0 
+        singlevel = [1]
+        for idx, e in enumerate(s):
+            if e ==" ":
+                continue
+                
+            if e.isdigit():
+                num = num*10 + int(e)
+
+            if not e.isdigit() or idx == len(s)-1:
+                res += sign * num                
+                if e == "(":
+                    singlevel.append(sign)
+                if e == ")":
+                    singlevel.pop()
+
+                if e == "+":
+                    sign = singlevel[-1]
+                if e == "-":
+                    sign = singlevel[-1] * -1
+                num = 0
+        if num:
+            res += sign * num
+        return res
+    def calculate3(self, s):
+        """
         s = "((1-(6+-18) -+ 3) - 14)"
               v  
         ) 14 - ) 3 + ) 18 +- 6 >> pop until )
