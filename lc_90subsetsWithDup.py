@@ -1,32 +1,41 @@
 class Solution(object):
     def subsetsWithDup(self, nums):
-        """
-        [1,2,2]
-         i   j
-        [[],
-        [1],
-        [1,2],
-
-        [1,2,2],
-        [2],[2,2]]
-
-        """
         nums.sort()
-        res = []
-        self.counter = 1
-        def dfs(start, end, cur): 
-            self.counter += 1
-            res.append(cur[:])
-
-            for i in range(start, end):
-                if i > start and nums[i] == nums[i-1]:
-                    continue
-                dfs(i+1, end, cur + [nums[i]])
-                
-        dfs(0, len(nums), [])
+        """
+        [1,2,3]
+       
         
+        [] 
+        [1] 
+            [1 2] 
+                 [1,2,3]
+            [1 3]
+        [2] 
+            [2,3]
+        [3]
+        
+        
+        [1,2,2]
+        
+        []
+        [1]
+            [1,2]
+                [1,2,2]    
+            [1,2]X
+        [2]
+            [2,2]
+        
+        """
+        res = []
+        def dfs(start, end, h):
+            res.append(h)
+            for idx in range(start, end):
+                if idx > start and nums[idx -1] == nums[idx]:
+                    continue
+                dfs(idx + 1, end, h + [nums[idx]])
+        dfs(0, len(nums), [])
         return res
-
+        
     def subsetsWithDup2(self, nums):
         """
         []
