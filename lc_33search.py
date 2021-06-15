@@ -25,16 +25,25 @@ class Solution(object):
             return -1 
 
         def getpivot(l,r):
-            if nums[l] <= nums[r]:
-                return 0
-            while l <= r:
-                m = l + (r-l) / 2
-                if nums[m] > nums[m + 1]:
-                    return m + 1
-                if nums[m] < nums[l]:
-                    r = m -1
+            #[4 5] [6 1 2 3]
+            # if lst[l] < lst[r], sorted! return lst[l]
+            # if r-l >= 1 return  min(lst[l], lst[r])
+            #mid = l + (r - l)/2
+            # return getpivot(l, mid) getpivot(mid+1, r)
+            if r -l <= 1:
+                if nums[l] < nums[r]:
+                    return nums[l], l 
                 else:
-                    l = m + 1
+                    return nums[r], r
+                
+            if nums[l] < nums[r]:
+                return nums[l], l
+            m = l + (r-l)/2
+            lf, lf_idx = getpivot(l,m)
+            rt, rt_idx = getpivot(m+1, r)
+            if rt > lf:
+                return lf, lf_idx
+            return rt, rt_idx
 
         def bs(l,r):
             while l < r:
@@ -47,7 +56,8 @@ class Solution(object):
                     l = m + 1
             return -1
         
-        min_idx = getpivot(0, len(nums)-1)
+        min_idx = getpivot(0, len(nums)-1)[1]
+        print(min_idx,"ew")
         if min_idx ==0 :
             return bs(0,len(nums))
         
@@ -55,3 +65,5 @@ class Solution(object):
             return bs(0, min_idx)
        
         return bs(min_idx, len(nums))
+nums, target = [1],0
+print(Solution().search(nums, target))
