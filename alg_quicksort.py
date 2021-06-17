@@ -1,40 +1,25 @@
-def Merge_Sort(array):
-    if len(array) > 1:
-        mid = len(array) // 2
-        # print(mid, array[:mid], array[mid:])
-        left_array = array[:mid]
-        right_array = array[mid:]
-        print(right_array)
-        Merge_Sort(left_array)
-        Merge_Sort(right_array)
+
+def partition(nums, l,r): #[6,5,9,0,8,2,4,7]
+    cmp_ele = nums[r-1]
+    i = l 
+    for v in range(l, r):
+        if nums[v] <= cmp_ele:
+            nums[v], nums[i] = nums[i], nums[v]
+            i += 1
+    
+    return i
+
+def quickSort(arr, l, r):
+    if l >= r:
+        return
+    
+    p = partition(arr, l, r)
+    
+
+    quickSort(arr, l, p-1 )
+    quickSort(arr, p, r)
+    return arr
         
-        right_index = 0
-        left_index = 0
-        merged_index = 0
-       
-        
-        while right_index < len(right_array) and left_index < len(left_array):
-            if(right_array[right_index] < left_array[left_index]):
-                array[merged_index] = right_array[right_index]
-                right_index = right_index + 1
-            else:
-                array[merged_index] = left_array[left_index]
-                left_index = left_index + 1
-
-            merged_index = merged_index + 1
-
-        while right_index < len(right_array):
-            array[merged_index] = right_array[right_index]
-            right_index = right_index + 1
-            merged_index = merged_index + 1
-        while left_index < len(left_array):
-            array[merged_index] = left_array[left_index]
-            left_index = left_index + 1
-            merged_index = merged_index + 1
-        # print(merged_index)
-        # print(left_array, right_array, array)
-
-Numbers = [41, 33, 17, 80, 61, 5, 55]
-print(Numbers)
-Merge_Sort(Numbers)
-print(Numbers)
+# [6,5,0,2,4,7,8,9]
+nums = [6,5,9,0,8,2,4,7]
+print(quickSort(nums, 0 , len(nums)))
