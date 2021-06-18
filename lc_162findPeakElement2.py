@@ -1,3 +1,4 @@
+        return l
 class Solution(object):
     def findPeakElement(self, nums):
         """
