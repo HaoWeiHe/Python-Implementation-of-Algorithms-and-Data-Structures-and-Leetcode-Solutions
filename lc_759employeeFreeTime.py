@@ -6,8 +6,26 @@ class Interval(object):
         self.end = end
 """
 from heapq import heappush, heappop
+
 class Solution(object):
     def employeeFreeTime(self, schedule):
+        """
+       [[[1,2],[5,6]],[[1,3]],[[4,10]]]
+       [1,2] [1,3] [4,10] [5,6]
+end  = 2       3    10     
+res =[]       []  [3,4] (start > preend)
+
+         
+        """
+        ints = sorted([i for s in schedule for i in s], key = lambda x: x.start)
+        ans = []
+        end = ints[0].end
+        for e in ints[1:]: 
+            if e.start > end: #end = 3
+                ans.append(Interval(end, e.start))
+            end = max(e.end, end)
+        return ans
+    def employeeFreeTime2(self, schedule):
         """
         [[[1,2],[5,6]],[[1,3]],[[4,10]]]
         [1,3], [4,10]
