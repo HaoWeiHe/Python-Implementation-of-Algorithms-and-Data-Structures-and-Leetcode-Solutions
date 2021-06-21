@@ -35,7 +35,7 @@ class Trie():
         for e in paths:
             if e == "":
                 continue
-            node = node.children[e] #this not node = node[e]
+            node = node.children[e] 
         return node
     
     def insertfile(self,paths):
@@ -53,7 +53,7 @@ class FileSystem(object):
         self.root = trie.root
         
     def get_subpaths(self, path):
-        return path.split("/")[1:]
+        return path.split("/")
                           
     def ls(self, path):
         """
