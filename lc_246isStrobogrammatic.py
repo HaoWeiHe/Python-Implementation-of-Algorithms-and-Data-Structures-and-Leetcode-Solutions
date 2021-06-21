@@ -10,11 +10,9 @@ class Solution(object):
         
         """
         d = {"6":"9", "8":"8","0":"0", "1":"1","9":"6"}
-        for i in range(1,11):
-            if str(i) not in d:
-                d[str(i)] = "#"
+
         for i in range(len(num)):
-            if num[i]!= d[num[~i]]:
+            if num[~i] not in d or num[i]!= d[num[~i]]:
                 return False
         return True
         
