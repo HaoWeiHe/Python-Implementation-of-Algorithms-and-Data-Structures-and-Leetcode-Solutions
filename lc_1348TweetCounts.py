@@ -11,20 +11,21 @@ or we can use maxheap and leverage it to init our list for ans
 
 
 """
-from heapq import heappush, heappop
+
 class TweetCounts(object):
 
     def __init__(self):
         
         self.d = defaultdict(list)
         self.scale = {"minute": 60, "hour":3600, "day":86400}
+
     def recordTweet(self, tweetName, time):
         """
         :type tweetName: str
         :type time: int
         :rtype: None
         """
-        heappush(self.d[tweetName], time)
+        self.d[tweetName].append(time)
         
         
         
@@ -36,12 +37,11 @@ class TweetCounts(object):
         :type endTime: int
         :rtype: List[int]
         """
-        h = self.d[tweetName][:]
+        
         denominator = self.scale[freq]
         ans = [0]* (1+(endTime-startTime)/denominator)
         
-        while h:
-            f = heappop(h)
+        for f in self.d[tweetName]:
             
             if startTime <= f <= endTime:
                 idx =  (f-startTime)/denominator 
