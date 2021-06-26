@@ -1,6 +1,33 @@
 from collections import defaultdict, deque
 class Solution(object):
+
     def leadsToDestination(self, n, edges, source, destination):
+        """
+        :type n: int
+        :type edges: List[List[int]]
+        :type source: int
+        :type destination: int
+        :rtype: bool
+        """
+        v  = [0] * n
+        g = defaultdict(list)
+        for e in edges:
+            g[e[0]].append(e[1])
+            
+        def dfs(node):
+            if len(g[node]) == 0:
+                return node == destination
+            if v[node] == 1:
+                return False
+            v[node] = 1
+            ans = True
+            for ele in g[node]:
+                ans = ans and dfs(ele)
+            v[node] = 0
+            return ans
+        return dfs(source)
+                    
+    def leadsToDestination2(self, n, edges, source, destination):
         """
         :type n: int
         :type edges: List[List[int]]
