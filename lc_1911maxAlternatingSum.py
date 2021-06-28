@@ -1,6 +1,31 @@
 class Solution(object):
     def maxAlternatingSum(self, nums):
         """
+             *
+             /\
+           +7  X
+           /\
+        -2   X
+        [7,2,5,3]
+         0 1 2 3
+         even, or not 
+        dp[(i, even)] = max(cur_val + dp[(i, -1*even)], dp[(i,even)])
+
+        """
+        dp = {}
+        def dfs(i, even):
+            if i == len(nums):
+                return 0
+            if (i,even) in dp:
+                return dp[(i, even)]
+            cur = nums[i] if even else -1 * nums[i]
+            dp[(i, even)] = max(cur + dfs(i + 1, not even), dfs(i + 1, even))
+            return dp[(i, even)]
+
+        return dfs(0, True)
+
+    def maxAlternatingSum3(self, nums):
+        """
          can I always put 0 here: [+4,-2,+5,-3,-0]
                                             51
          0 3 5 2 4
@@ -17,6 +42,7 @@ class Solution(object):
             if nums[idx] < nums[idx - 1]:
                 res += (nums[idx-1] - nums[idx])
         return res
+
     def maxAlternatingSum2(self, nums):
         """
         :type nums: List[int]
