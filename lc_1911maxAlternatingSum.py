@@ -1,5 +1,12 @@
 class Solution(object):
     def maxAlternatingSum(self, nums):
+        odd,even = 0, 0 
+        for e in nums:
+            odd = max(-e + even, odd)
+            even = max(e + odd, even)
+        return even
+
+    def maxAlternatingSum4(self, nums):
         """
              *
              /\
