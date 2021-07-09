@@ -16,7 +16,8 @@ class Solution(object):
         v = set()
         while q:
             i,j, level = q.popleft()
-
+            if i > 2*x or j > 2*j:
+                continue
             if (i,j) == (x,y):
                 return level
            
