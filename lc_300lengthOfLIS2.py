@@ -1,6 +1,21 @@
-from heapq import heappop, heappush
+
 class Solution(object):
     def lengthOfLIS(self, nums):
+        """
+       [10,9,2,5,3,7,101,4,18,999,19]
+        [2,3,7,101]
+        [2,3,4,101]
+        [2,3,4,18,19]
+        """
+        tmp = []
+        for e in nums:
+            i = bisect_left(tmp, e)
+            if i == len(tmp):
+                tmp.append(e)
+            else:
+                tmp[i] = e
+        return len(tmp)
+    def lengthOfLIS2(self, nums):
         """
         [10,9,2,5,3,7,101,18]
          10,1
