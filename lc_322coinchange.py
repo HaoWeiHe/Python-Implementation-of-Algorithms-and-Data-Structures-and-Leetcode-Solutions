@@ -1,4 +1,11 @@
 class Solution(object):
+    def coinChange4(self, coins, amount):
+        lst = [float('inf')] * (amount +1)
+        lst[0] = 0 
+        for c in coins:
+            for cur in range(c, amount+1):
+                lst[cur] = min(lst[cur], lst[cur-c]+1)
+        return lst[amount] if lst[amount]!=float('inf') else -1
     def coinChange3(self, coins, amount):
         """
         1,2,5 return 1
