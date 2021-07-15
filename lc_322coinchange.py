@@ -1,4 +1,42 @@
 class Solution(object):
+    def coinChange3(self, coins, amount):
+        """
+        1,2,5 return 1
+        < 0 return inf
+        3 -> 1,2
+        5 -> 0+5, 2+3, 1+4
+        mem[]
+        4 = 2+2, 1+3
+        check 2: 1
+        1,2,5
+        7 -> 5+2, 2+5, 1 + 6
+        """
+        self.mem = {}
+        
+        def dfs(rest):
+            if rest < 0:
+                return -1
+            
+            if rest == 0:
+                return 0
+            
+            if rest in self.mem:
+                return self.mem[rest]
+
+            ans = float('inf')
+            for e in coins :
+                r = dfs(rest -e)
+                if r > -1 :
+                    ans = min(1 +r ,ans)
+            
+            self.mem[rest] = ans if ans!= float('inf') else -1
+            
+            return self.mem[rest]
+        
+        # rest, work = 
+        return dfs(amount)
+        # return rest if work else -1
+
     def coinChange(self, coins, amount):
         """
         1,2,5 return 1
