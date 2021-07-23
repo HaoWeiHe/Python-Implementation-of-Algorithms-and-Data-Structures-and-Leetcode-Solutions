@@ -1,4 +1,20 @@
 class Solution(object):
+    def moveZeroes3(self, nums):
+        """
+           r
+        [0,1,0,3,12]
+         w
+            r
+        [1,0,0,3,12]
+           w
+           
+        """
+        w = 0 
+        for r in range(len(nums)):
+            if nums[r] != 0 :
+                nums[r], nums[w] = nums[w], nums[r]
+                w += 1
+        
     def moveZeroes2(self, nums):
         """
        [1,3,0,0,12]
