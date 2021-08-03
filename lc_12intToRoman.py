@@ -1,6 +1,19 @@
 class Solution(object):
     def intToRoman(self, num):
         """
+        :type num: int
+        :rtype: str
+        """
+        lst  = [(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"),(5, "V"), (4, "IV"), (1, "I")]
+        res = ""
+        for e in lst:
+            val, symbal = e
+            count, num = divmod(num, val)
+            res = res + symbal*count
+        return res
+        
+    def intToRoman2(self, num):
+        """
          58
          50 L
          8  V
