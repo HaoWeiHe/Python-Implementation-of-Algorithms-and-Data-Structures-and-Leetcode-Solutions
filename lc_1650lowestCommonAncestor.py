@@ -17,7 +17,7 @@ class Solution(object):
         l, r = [],[]
         root = l 
         def helper(root):
-            lst = []
+            lst = {}
             while root:
                 lst.append(root)
                 root = root.parent
@@ -25,9 +25,9 @@ class Solution(object):
         
         
         l = helper(p)
-        r = helper(q)
+        root = q
+        while root:
+            if root in l:
+                return root
+            root = root.parent
         
-        for i in range(len(l)):
-            if l[i] in r:
-                return l[i]
-        return None
