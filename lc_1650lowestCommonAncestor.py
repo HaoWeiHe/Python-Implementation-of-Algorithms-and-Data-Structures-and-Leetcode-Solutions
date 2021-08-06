@@ -1,33 +1,14 @@
-"""
-# Definition for a Node.
-class Node:
-    def __init__(self, val):
-        self.val = val
-        self.left = None
-        self.right = None
-        self.parent = None
-"""
 
 class Solution(object):
-    def lowestCommonAncestor(self, p, q):
+    def lowestCommonAncestor(self, a, b):
         """
         :type node: Node
         :rtype: Node
         """
-        l, r = [],[]
-        root = l 
-        def helper(root):
-            lst = {}
-            while root:
-                lst.append(root)
-                root = root.parent
-            return lst
+        p1, p2 = a, b
+        while p1!= p2:
+            p1 = p1.parent if p1.parent else b
+            p2 = p2.parent if p2.parent else a
+        return p1
         
-        
-        l = helper(p)
-        root = q
-        while root:
-            if root in l:
-                return root
-            root = root.parent
         
