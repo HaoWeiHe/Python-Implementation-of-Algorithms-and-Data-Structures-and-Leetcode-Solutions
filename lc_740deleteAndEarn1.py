@@ -1,6 +1,26 @@
 class Solution(object):
     def deleteAndEarn(self, nums):
         """
+        1) sort nums : [2,3,4]
+        2) use, not_use:
+           a. if cur-1 == prev
+                use, not_use = not_use + key*c[key], max(use, not_used)
+           b. if cur-1 != prev
+                use, not_use = max(use, not_use) + key*c[key], max(use, not_used)
+        """
+        c = Counter(nums)
+        prev, use, not_used  = None, 0, 0
+        
+        for key in sorted(c):
+            if key-1 == prev:
+                use, not_used = not_used + key*c[key], max(use, not_used)
+            else:
+                use, not_used = max(use, not_used) + key*c[key], max(use, not_used)
+            prev = key
+        return max(use, not_used)
+        
+    def deleteAndEarn2(self, nums):
+        """
         [2,2,3,3,3,4]
         (2:2, 3:3, 4:1) 
         
