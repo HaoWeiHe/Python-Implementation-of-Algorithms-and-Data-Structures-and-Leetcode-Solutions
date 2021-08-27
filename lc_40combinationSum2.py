@@ -10,14 +10,19 @@ class Solution(object):
         self.ans = []
         self.his = set()
         def dfs(i,acc,cur_sum):
-    
-            if cur_sum == target:
-                if tuple(acc) not in self.his:
-                    self.ans.append(acc)
-                self.his.add(tuple(acc))
+            if tuple(acc) in self.his:
                 return 
+            if cur_sum > target:
+                return 
+            if cur_sum == target :
+                self.ans.append(acc)
+                self.his.add((tuple(acc)))
+                return 1
+            
             for idx in range(i, len(candidates)):
-                dfs(idx+1, acc + [candidates[idx]], cur_sum + candidates[idx] )
+                self.his.add(tuple(acc))
+                res = dfs(idx+1, acc + [candidates[idx]], cur_sum + candidates[idx] )
                 
         dfs(0, [],0)
+        
         return self.ans
