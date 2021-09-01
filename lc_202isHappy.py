@@ -5,14 +5,17 @@ class Solution(object):
         :rtype: bool
         """
         h = set()
-        while n and n not in h:
+        def get_next(n):
             tmp =  0
-            h.add(n)
             while n:
                 q,r = divmod(n,10)
                 tmp += r**2
                 n = q
+            return tmp
+                
+        while n and n not in h:
+            h.add(n)
+            n = get_next(n)
             
-            n = tmp
            
-        return n == 1
+        return n == 1 
