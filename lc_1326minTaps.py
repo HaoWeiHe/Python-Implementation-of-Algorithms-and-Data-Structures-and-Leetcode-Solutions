@@ -1,5 +1,3 @@
-
-
 class Solution(object):
     def minTaps(self, n, ranges):
         """
@@ -8,23 +6,19 @@ class Solution(object):
         :rtype: int
         """
         lst = []
-        for i in range(n+1):
-            lst.append((i- ranges[i], i+ranges[i]))
-        lst.sort(key = lambda x:(x[0],x[1]))
-       
-        if not lst:
-            return -1
-
-        ans, e, l, i = 0, 0, 0,  0
+        for i,v in enumerate(ranges):
+            lst.append((i-v, i+v))
+        lst.sort(key= lambda (x,y): (x,y))
         
+        i, pre, end, ans = 0, 0, 0, 0
         
-        while e < n: 
-            while i <= n and lst[i][0] <= l:
-                e = max(e, lst[i][1])
-                i+= 1
-                
-            if e == l:
+        while end < n:
+            while i < n+1 and lst[i][0] <= pre:
+                end = max(end, lst[i][1])
+                i+=1
+           
+            if pre == end:
                 return -1
-            l = e
+            pre = end
             ans += 1
         return ans
