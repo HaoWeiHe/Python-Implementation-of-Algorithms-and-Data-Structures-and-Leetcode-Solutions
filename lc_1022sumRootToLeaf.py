@@ -12,13 +12,14 @@ class Solution(object):
         """
         self.res = 0
         def dfs(root, val):
-          
+            
             if not root:
                 return 
+            cur_val = val*2 + root.val
             if not root.right and not root.left:
-                self.res += val*2 + root.val
+                self.res += cur_val
                 return 
-            dfs(root.right, val*2 + root.val)
-            dfs(root.left, val*2 + root.val)
+            dfs(root.right, cur_val)
+            dfs(root.left, cur_val)
         dfs(root, 0)
         return self.res
