@@ -10,6 +10,21 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
+        lst = []
+        def dfs(r):
+            if not r:
+                return 
+            lst.append(r.val)
+            dfs(r.right)
+            dfs(r.left)
+        dfs(root)
+        lst.sort()
+        return min(lst[i] - lst[i-1] for i in range(1,len(lst)))
+    def minDiffInBST2(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
         self.lst =[]
         self.ans = float("inf")
         def bs(val):
