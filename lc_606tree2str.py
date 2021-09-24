@@ -10,6 +10,21 @@ class Solution(object):
         :type root: TreeNode
         :rtype: str
         """
+        
+        def dfs(root):
+            if not root:
+                return ""
+            if not root.right and not root.left :
+                return str(root.val)
+            if not root.right:
+                return str(root.val) + "(" + dfs(root.left) + ")" 
+            return str(root.val) + "(" + dfs(root.left) + ")(" + dfs(root.right) + ")"
+        return dfs(root)
+    def tree2str2(self, root):
+        """
+        :type root: TreeNode
+        :rtype: str
+        """
         self.res = []
         def dfs(root):
             if not root:
