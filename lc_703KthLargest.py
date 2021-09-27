@@ -4,8 +4,34 @@
 
 
 """
-
 class KthLargest(object):
+
+    def __init__(self, k, nums):
+        """
+        :type k: int
+        :type nums: List[int]
+        """
+        self.k = k 
+        self.h = nums
+        heapq.heapify(self.h)
+        while len(self.h) > self.k:
+            heapq.heappop(self.h)
+
+    def add(self, val):
+        """
+        :type val: int
+        :rtype: int
+        """
+        heapq.heappush(self.h, val)
+        if len(self.h) > self.k:
+            heapq.heappop(self.h)
+        return self.h[0]
+
+
+# Your KthLargest object will be instantiated and called as such:
+# obj = KthLargest(k, nums)
+# param_1 = obj.add(val)
+class KthLargest2(object):
     def insert(self, target):
         l, r= 0 , len(self.h)
         while l < r:
