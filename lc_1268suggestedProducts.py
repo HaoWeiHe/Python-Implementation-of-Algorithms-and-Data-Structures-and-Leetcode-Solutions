@@ -1,54 +1,34 @@
+from collections import defaultdict
+
 class Node():
     def __init__(self, word = None):
         self.children = defaultdict(Node)
-        self.word = word
-        self.isW = False
+        self.suggest = []
         
 class Trie():
     def __init__(self):
         self.root = Node()
-        
+    
     def insert(self, word):
         node = self.root
         for c in word:
             node = node.children[c]
-        node.word = word
-        node.isW = True
-        
-    def prefix(self, w):
-        ans = []
-        node = self.root
-        for c in w:
-            node = node.children[c]
-        
-        def dfs(node,):
-            
-            if node.isW:
-                ans.append(node.word)
-            
-            for c in node.children:
-                dfs(node.children[c])
-           
-            return ans
-        dfs(node)        
-        return ans
-        
-            
+            if len(node.suggest) < 3:
+                node.suggest.append(word)
+              
 class Solution(object):
     def suggestedProducts(self, products, searchWord):
-        """
-        :type products: List[str]
-        :type searchWord: str
-        :rtype: List[List[str]]
-        """
+
         trie = Trie()
-       
+        products.sort()
+        
         for p in products:
             trie.insert(p)
         
         ans = []
-        for i in range(1,len(searchWord)+1):
-            candidate = trie.prefix(searchWord[:i])
-            ans.append(sorted(candidate)[:3])
+        node = trie.root
+        for c in searchWord:
+            node = node.children[c]
+            ans.append(node.suggest)
+            
         return ans
-        
