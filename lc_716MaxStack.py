@@ -1,53 +1,67 @@
-from heapq import heappush as hpush, heappop as hpop
-
-
 class MaxStack(object):
 
     def __init__(self):
-        self.h = []
-        self.stack = []
+        self.s = []
+        self.mx = []
 
     def push(self, x):
-        hpush(self.h, -x)
-        self.stack.append(x)
+        """
+        :type x: int
+        :rtype: None
+        """
+        self.s.append(x)
+        tmp = x if not self.mx else max(self.mx[-1], x)
+        self.mx.append(tmp)
         
+
     def pop(self):
         """
         :rtype: int
         """
-        top = self.stack.pop()
-        can = []
-        while self.h:
-            ele = hpop(self.h)
-            if ele == -top:
-                break
-            can.append(ele)
-        for ele in can:
-            hpush(self.h, ele)
-        
-        return top
+        ele = self.s.pop()
+        self.mx.pop()
+        return ele
 
     def top(self):
-        return self.stack[-1]
+        """
+        :rtype: int
+        """
+        return self.s[-1]
+        
 
     def peekMax(self):
-        return -self.h[0]
-        
+        """
+        :rtype: int
+        """
+        return self.mx[-1]
 
     def popMax(self):
         """
         :rtype: int
         """
-        top = hpop(self.h)
-        q = []
-        while self.stack:
-            cur = self.stack.pop()
-            if cur == -top:
+        tmp_max = self.mx[-1]
+        can  =[]
+        while self.s:
+            ele = self.s.pop()
+            self.mx.pop()
+            if ele == tmp_max:
                 break
-            q.append(cur)
-        while q:
-            self.stack.append(q.pop())
-        return -top
+            can.append(ele)
+        while can:
+         
+            ele = can.pop()
+            self.push(ele)
+        return tmp_max
+            
+
+
+# Your MaxStack object will be instantiated and called as such:
+# obj = MaxStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.peekMax()
+# param_5 = obj.popMax()
 
 
 # Your MaxStack object will be instantiated and called as such:
