@@ -24,7 +24,7 @@ class Solution(object):
 		 [4,2] ->
 		  """
 		self.ans = []
-		def dfs(lst):
+		def dfs(lst, dia1, dia2):
 			if len(lst) == n:
 				tmp = []
 				for ele in lst:
@@ -35,17 +35,16 @@ class Solution(object):
 				return 
 
 			for i in range(n):
-				flag = True
-				if not lst:
-					dfs(lst+[i])
+				# if not lst:
+				# 	dfs(lst+[i],[],[])
+				# 	continue
+				dia1_code = len(lst) + i #x + y 
+				dia2_code = len(lst) - i + n -1 #x - y + n -1
+				if i in lst or dia1_code in dia1 or dia2_code in dia2:
 					continue
-		
-				for lvl, idx in enumerate(lst): #[.Q..] if lvl == 2, i - val!= 2
-					if i == idx or i == idx + (len(lst) - lvl) or i == idx - (len(lst) - lvl):#idx + lvl == i or idx - lvl == i:
-						flag = False
-				if flag:
-					dfs(lst+[i])
-		dfs([])
+
+				dfs(lst+[i], dia1 + [dia1_code], dia2 + [dia2_code])
+		dfs([],[],[])
 		return self.ans
 			
 			
