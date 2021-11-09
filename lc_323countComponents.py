@@ -7,7 +7,7 @@ class UnionFind():
     def union(self,x,y):
         px, py = self.find(x), self.find(y)
         if px == py:
-            return 
+            return False
         if self.rank[px] > self.rank[py]:
             self.parent[py] = px
         elif self.rank[py] > self.rank[px]:
@@ -15,7 +15,7 @@ class UnionFind():
         else:
             self.parent[px] = py
             self.rank[py] += 1
-        
+        return True
     
     def find(self,x):
         if x != self.parent[x]:
@@ -27,13 +27,15 @@ class UnionFind():
 class Solution(object):
     def countComponents(self, n, edges):
         uf = UnionFind(n)
-        ans = 0 
+        ans = n 
         for a,b in edges:
-            uf.union(a,b)
-        for ele in range(n):
-            uf.find(ele)
+            if uf.union(a,b): 
+                n -= 1
+
+        # for ele in range(n):
+        #     uf.find(ele)
         
-        return len(set(uf.parent))
+        return n#len(set(uf.parent))
         
     def countComponents2(self, n, edges):
         """
@@ -66,6 +68,3 @@ class Solution(object):
             ans += 1
 
         return ans
-
-n, edges = 4, [[0,1],[2,3],[1,2]]
-print(Solution().countComponents(n,edges))
