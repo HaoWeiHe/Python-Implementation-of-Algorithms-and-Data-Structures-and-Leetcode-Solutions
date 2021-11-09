@@ -7,7 +7,7 @@ class UnionFind():
     def union(self,x,y):
         px, py = self.find(x), self.find(y)
         if px == py:
-            return False
+            return False #means alraedy in the same group
         if self.rank[px] > self.rank[py]:
             self.parent[py] = px
         elif self.rank[py] > self.rank[px]:
@@ -15,7 +15,7 @@ class UnionFind():
         else:
             self.parent[px] = py
             self.rank[py] += 1
-        return True
+        return True #means in the same group but now together
     
     def find(self,x):
         if x != self.parent[x]:
