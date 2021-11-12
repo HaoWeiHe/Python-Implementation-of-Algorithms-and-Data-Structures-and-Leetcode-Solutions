@@ -63,13 +63,7 @@ class Solution(object):
                         flag = True
                         for i in range(r_val):
                             board[c_idx][r_idx - i] = -1
-            #emute
-            # print("=====")
-            # for ele in board:
-            #     s = ""
-            #     for e in ele:
-            #         s += "%5s"%(e)
-            #     print(s)
+   
             for row_idx in range(num_rows):
                 counter = 0 
                 new_lst  = []
@@ -92,4 +86,3 @@ class Solution(object):
                 continue
             break
         return board
-                
