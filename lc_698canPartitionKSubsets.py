@@ -11,33 +11,44 @@ class Solution(object):
 			 if 2 ,finish
 			 if 1: get 1 in [4,2,3,5,2]
 		"""
+		
 		target = sum(nums)/k
-
+		if target * k != sum(nums):
+			return False
 		d = [False]* len(nums)
 
-		self.ans = False
+		self.mem = {}
 
-		def dfs(d, ret, counter):
+		def dfs(lst, ret, counter):
+			if tuple(lst) in self.mem:
+				return self.mem[tuple(lst)]
 
 			if counter == k:
-				self.ans = True
-				return 
+				return True
 
-			if ret == 0:
-				dfs(d, target, counter +1)
-				return
-
-			for idx, v in enumerate(d):
-				val = nums[idx]
-				if v or val > ret:
-					continue
-				d[idx] = True
-				dfs(d, ret - val, counter)
-				d[idx] = False
+			if ret < 0:
+				return False
 			
-		
-		dfs(d, target,0) 
-		return self.ans
+			if ret == 0:
+				return dfs(lst, target, counter +1)
+			
+			for idx in range(len(nums)):
+				if lst[idx]:
+					continue
 
-nums, k =[1,2,3,4], 3
+				lst[idx] = True
+
+				if dfs(lst, ret - nums[idx], counter):
+					self.mem[tuple(lst)] = True
+					return True
+
+				lst[idx] = False
+
+			self.mem[tuple(lst)] = False
+			return self.mem[tuple(lst)]
+			
+		return dfs(d, target, 0) 
+		
+
+nums, k = [1,2,3,5],2
 print(Solution().canPartitionKSubsets(nums, k))
