@@ -1,6 +1,24 @@
 class Solution(object):
     def jump(self, nums):
         """
+        :type nums: List[int]
+        :rtype: int
+        """
+        cur = len(nums) - 1
+        step = 0 
+        while cur != 0 :
+            tmp = cur
+            
+            for i in range(cur-1, -1,-1):
+                if nums[i] + i >= cur:
+                    tmp = i
+            if tmp == cur:
+                return -1
+            step += 1
+            cur = tmp
+        return step if cur == 0 else -1
+    def jump2(self, nums):
+        """
         [2,3,1,1,4]
          ^   
            | |
