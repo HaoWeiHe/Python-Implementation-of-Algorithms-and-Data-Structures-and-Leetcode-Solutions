@@ -1,5 +1,15 @@
 class Solution(object):
     def minDeletions(self, s):
+        used, freqs = set(), Counter(s).values()
+        ans = 0 
+        for f in freqs:
+            while f > 0 and f in used:
+                ans += 1
+                f -= 1
+            used.add(f)
+        return ans
+
+    def minDeletions2(self, s):
         """
             ceabaacb
             
@@ -15,7 +25,6 @@ class Solution(object):
         """
         ans, d = 0, {}
         counter = Counter(s)
-        s = sorted(counter.values())
         
         for cur in s:
             if cur in d:
