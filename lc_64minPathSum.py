@@ -1,6 +1,26 @@
 class Solution(object):
     def minPathSum(self, grid):
         """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        
+        grid = [[float('inf')] *len(grid[0])]  + grid
+        for col in range(len(grid)):
+            grid[col] = [float('inf')] + grid[col]
+        m, n = len(grid),  len(grid[0])
+       
+        for i in range(1,m):
+            for j in range(1,n):
+                if i == 1 and j == 1:
+                    continue
+                grid[i][j] +=  min(grid[i-1][j], grid[i][j-1])
+  
+                
+        
+        return grid[-1][-1]
+    def minPathSum2(self, grid):
+        """
         f(i,j) = val + min(f(i-1,j), f(i+1,j))
         until i == 0 and j ==0 
         if i < 0 and j < 0 break
