@@ -1,43 +1,52 @@
 import collections
-class unifind():
-	def __init__(self, lst):
-		self.parent = [i for i in range(len(lst))]
-		C = collections.Counter(lst)
-		self.rank = [C[ele] for ele in range(len(lst))]
+class Unionfind():
+    def __init__(self,lst ):
+        
+        self.parent = [ele for ele in lst]
+        self.rank = [0] *len(lst)
+    
+    def find(self,x,v):
+    	if x in v:
+    		return None
 
-	def find(self,x):
-		if x!= self.parent[x]:
-			self.parent[x] = self.find(self.parent[x])
-		return self.parent[x]
+        if x != self.parent[x]:
+            tmp =  self.find(self.parent[x],v + [x])
+            if tmp == None:
+            	return None
+            self.parent[x] = tmp 
+        
+        return self.parent[x]
+            
+    def union(self, x, y ):
+        px, py = self.find(x,[]), self.find(y,[])
+       	if px == None or py == None:
+       		return False
 
-	def union(self,x,y):
+        if self.rank[px] > self.rank[py]:
+            self.parent[py] = px
+        elif self.rank[px] < self.rank[py]:
+            self.parent[px] = py
+        else:
+            self.parent[px] = py
+            self.rank[py] += 1
+        return False
 
-		px, py  = self.find(x), self.find(y)
-		if px == py:
-			return True
-		if self.rank[px] < self.rank[py]:
-			self.rank[py] += 1
-			self.parent[px] = py
-		elif self.rank[px] > self.rank[py]:
-			self.rank[px] += 1
-			self.parent[py] = px
-		else:
-			#px <- py
-			self.rank[px] += 1
-			self.parent[py] = px
-		return False
-
-tests = [[1,0], [0,0,2], [0,0,0],[3,0,0,3]]
+tests = [[9, 0, 1, 2, 8, 8, 8, 8, 9, 9], [4,0,1,2,8,8,8,8,8],[3,0,2,2],[1,0], [0,0,2], [0,0,0],[3,0,0,3]]
+tans = [True, True,True, False,False, True, True]
 class sol():
 	def validTree(self, lst):
-		uniF = unifind(lst)
+		uniF = Unionfind(lst)
 		for idx, val in enumerate(lst):
+			
 			if idx == val:
 				continue
-			if uniF.union(val, idx):
+			if uniF.union(idx, val):
 				return False
+		
 		return len(set(uniF.parent)) == 1
 
 
-for lst in tests:
-	print(sol().validTree(lst))
+for idx, lst in enumerate(tests):
+
+	print("Right ans?\t{}".format( "Y" if tans[idx] == sol().validTree(lst) else "N"))
+	# print(sol().validTree(lst))
