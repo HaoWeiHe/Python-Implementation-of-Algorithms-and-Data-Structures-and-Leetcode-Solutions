@@ -3,6 +3,25 @@ class Solution(object):
         """
         :type dungeon: List[List[int]]
         :rtype: int
+        """
+        inf = float('inf')
+        dungeon = [row + [inf] for row in dungeon]
+        dungeon +=  [[inf] * len(dungeon[0])]
+       
+        m,n = len(dungeon), len(dungeon[0])
+        
+        for i in range(m-2,-1,-1):
+            for j in range(n-2,-1,-1):
+                if i == m-2 and j == n-2:
+                    dungeon[i][j] = 1 + abs(dungeon[i][j]) if dungeon[i][j] <= 0 else 1
+                    continue
+                down, right, cur = dungeon[i][j+1], dungeon[i+1][j], dungeon[i][j]
+                dungeon[i][j] = min(max(1, down - cur ), max(1, right - cur))
+        return dungeon[0][0]
+    def calculateMinimumHP2(self, dungeon):
+        """
+        :type dungeon: List[List[int]]
+        :rtype: int
         find min(abs(x) )
         -8,-2 -> 2!
         2,3 -> 1
