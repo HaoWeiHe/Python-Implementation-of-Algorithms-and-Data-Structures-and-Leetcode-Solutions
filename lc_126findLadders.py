@@ -1,3 +1,5 @@
+
+
 class Solution(object):
     def findLadders(self, beginWord, endWord, wordList):
         """
@@ -17,7 +19,6 @@ class Solution(object):
                 d[ele].add(w)
 
         q = deque([[beginWord,[beginWord]]])
-        shortest_path_length = float("inf") 
         ans = []
         v = {}
         
@@ -27,7 +28,6 @@ class Solution(object):
                 continue
             v[cur_w] = len(history)
             if cur_w == endWord :
-                shortest_path_length = min(shortest_path_length, len(history))
                 ans.append(history )
         
             for ele in generalFormat(cur_w):
