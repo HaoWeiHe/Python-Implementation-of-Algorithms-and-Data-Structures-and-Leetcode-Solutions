@@ -1,35 +1,26 @@
 class Solution(object):
-    def minAddToMakeValid(self, S):
-
-        counter, res = 0,0
-        for e in S:
+    def minAddToMakeValid(self, s):
+        """
+            "())"
+             10 
+             if c == 0 and ) ans +1
+            "(((" c == 3:
+            in the end ans += c
+            "()))(("
+              00012
+        ans  0012 -> 
+            
+        """
+        c, ans = 0,0
+        for e in s:
             if e == "(":
-                counter +=1
-            else:
-                if counter >0:
-                    counter -=1
+                c += 1
+                
+            if e == ")" :
+                if c == 0:
+                    ans += 1
+                c = max(0, c-1)
 
-                else:
-                    res +=1
-        return res + counter
-
-    def minAddToMakeValid2(self, S):
-        """
-        stack = []
-        if stack is empty, and ")" comming, res +=1
-        """
-        stack = []
-        res = 0
-        for e in S:
-            if e =="(":
-                stack.append("(")
-           
-            else:
-                if stack:
-                    stack.pop()
-                else:
-                    res += 1
-
-        return res + len(stack)
-S = "()))(("
-print(Solution().minAddToMakeValid(S))
+            
+        return ans + c
+        
