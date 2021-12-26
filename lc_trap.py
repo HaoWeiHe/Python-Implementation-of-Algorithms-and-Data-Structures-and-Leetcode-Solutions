@@ -1,23 +1,25 @@
-
 class Solution(object):
-	def trap(self, arr):
-		
-		if not arr:
-			return 0
-		n = len(arr)
-		lft,right = [0]*n,[0]*n
-		
-		lft[0], right[-1] = arr[0], arr[-1]
-
-		for i in range( 1, n):
-			lft[i] = max(lft[i-1], arr[i])
-	
-		
-		for i in range(n-2, -1, -1):
-			right[i] = max(right[i+1],arr[i])
-		
-		res = 0 
-		for i in range(n):
-			res+= min(lft[i], right[i]) - arr[i]
-	
-		return res
+    def trap(self, height):
+        """
+        [0,1,0,2,1,0,1,3,2,1,2,1]
+        [0,1,1,2,2,2,2,3,3,3,3,3] (max from left) A
+        [3,3,3,3,3,3,3,3,2,2,2,1] (max from right) B
+        [1,1,1,1,1,1,1,1,1,1,1,1]
+                             ~1~0
+        [0,1,1,2,2,2,2,3,2,2,2,1] (min from A and B)
+        [0,1,0,2,1,0,1,3,2,1,2,1] (orignial )
+        [0,0,1,0,1,2,1,0,0,1,0,0]
+        """
+        n = len(height)
+        if not height:
+            return 0
+        left, right = [height[0]], [height[-1]] * n 
+        
+        for idx in range(1,n):
+            left.append(max(height[idx], left[idx - 1]))
+            right[~idx] = max(height[~idx], right[~(idx - 1)])
+        ans, diff = 0, []
+        
+        for idx in range(n):
+            ans += min(right[idx], left[idx]) - height[idx]
+        return ans
