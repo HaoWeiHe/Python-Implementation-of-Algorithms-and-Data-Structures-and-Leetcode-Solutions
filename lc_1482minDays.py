@@ -18,8 +18,7 @@ class Solution(object):
     in the end, check if l is valid
     if not -1
         """
-        if m*k > len(bloomDay):
-            return -1
+
         l, r = min(bloomDay), max(bloomDay) + 1
         """
         [1,10,3,10,2]
@@ -41,9 +40,8 @@ acc_num  1  0 1  0 1
                     ans += 1
                     acc_num = 0 
             return ans >= m
-        acc_day = 0 
+         
         while l < r:
-            
             mid = (l + r) / 2
             if valid(mid):
                 r = mid
