@@ -10,6 +10,34 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
+        self.ans = 1 
+        def dfs(root):
+            if not root:
+                return 0, None #acc, pre_node
+            if not root.right and not root.left:
+                return 1, root
+            
+            l, prel = dfs(root.left)
+            r, prer = dfs(root.right)
+            
+            if  prel and prel.val == 1 + root.val:
+                l += 1
+            else:
+                l = 1
+            if  prer and prer.val == 1 + root.val:
+                r += 1
+            else:
+                r = 1
+            self.ans = max(self.ans, r, l)
+            return max(r, l), root
+        dfs(root)
+        return self.ans
+class Solution(object):
+    def longestConsecutive2(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
         self.ans = 1
         def dfs(node, preNode, diff, acc):
             if not node:
