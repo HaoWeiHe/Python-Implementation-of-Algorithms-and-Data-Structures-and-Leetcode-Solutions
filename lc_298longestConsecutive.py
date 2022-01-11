@@ -10,16 +10,22 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        if not root:return 0
-        self.ans = 0 
-        def dfs(root, prev, acc):
-            if not root:
+        self.ans = 1
+        def dfs(node, preNode, diff, acc):
+            if not node:
                 return 
-            acc = 1 if root.val != prev + 1 else acc+1
+          
+            cur_diff = node.val - preNode.val
+            if cur_diff == 1 and (acc == 1 or diff == cur_diff):
+                acc += 1
+            else:
+                acc = 1
+          
             self.ans = max(self.ans, acc)
-           
-       
-            dfs(root.right, root.val, acc)
-            dfs(root.left, root.val, acc)
-        dfs(root, root.val, 1)
-        return self.ans
+            dfs(node.right, node, cur_diff, acc)
+            dfs(node.left, node, cur_diff, acc)
+            
+            
+        dfs(root, root,0, 0 )
+        return self.ans 
+        
