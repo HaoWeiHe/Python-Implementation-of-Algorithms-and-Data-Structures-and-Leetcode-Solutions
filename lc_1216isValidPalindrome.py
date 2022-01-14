@@ -6,6 +6,33 @@ class Solution(object):
             j
         """
         self.v = {}
+        def dfs(i,j):
+            if i == j:
+                return 0
+            if j - i == 1:
+                return s[i] != s[j]
+            
+            if (i,j) in self.v:
+                return self.v[(i,j)]
+
+            if s[i] == s[j]:
+                self.v[(i,j)] = dfs(i+1, j-1)
+                return self.v[(i,j)]
+            
+            self.v[(i,j)] = 1 + min(dfs(i+1, j), dfs(i,j-1))
+            return self.v[(i,j)] 
+        
+        return dfs(0,len(s)-1) <= k
+            
+                
+   
+    def isValidPalindrome3(self, s, k):
+        """
+        abcdeca
+         i
+            j
+        """
+        self.v = {}
         def dfs(i,j,k):
             if (i,j,k) in self.v:
                 return self.v[(i,j,k)]
@@ -49,3 +76,5 @@ class Solution(object):
         return dfs(0,len(s)-1, k)
             
                 
+
+
