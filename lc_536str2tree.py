@@ -5,6 +5,37 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
+    def str2tree2(self, s):
+        """
+        4(2(3)(1))(6(5))
+                    ^
+         open: construct new tree, root = val, idx _next_to_val
+         close: return and return idx + 1
+        """
+        def get_idx_val(idx):
+            flag = 1
+            num = 0 
+            while idx < len(s) and (s[idx].isdigit() or s[idx] == "-") :
+                if s[idx] == "-":
+                    flag = -1
+                else:
+                    num = num*10 + int(s[idx])
+                idx += 1
+           
+            return num * flag, idx
+        
+        def dfs(idx):
+            if idx == len(s):
+                return None, idx
+            val, idx = get_idx_val(idx)
+            root = TreeNode(val)
+            if idx < len(s) and s[idx] == "(":
+                root.left, idx = dfs(idx + 1)
+                
+            if root.left and idx < len(s) and s[idx] == "(":
+                root.right, idx = dfs(idx + 1)
+            return root, idx if idx < len(s) and s[idx] == "(" else idx + 1
+        return dfs(0)[0]
     def str2tree(self, s):
         """
         -4(12(34)(1))(6(5))
@@ -38,8 +69,7 @@ class Solution(object):
                     stk.append(idx)
             
             v1 = stk.pop(0)
-            # print(v1, v2,s,s[:v1])
-            # idx + 1 :v1 v1+2:-1
+         
             root.left = dfs(s[root_idx + 1:v1])
             if stk:
                 root.right = dfs(s[v1+2:-1])
