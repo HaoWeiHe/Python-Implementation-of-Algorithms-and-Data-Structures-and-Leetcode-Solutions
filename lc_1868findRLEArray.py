@@ -1,3 +1,5 @@
+
+
 class Solution(object):
     def findRLEArray(self, encoded1, encoded2):
         """
@@ -19,22 +21,17 @@ class Solution(object):
         i, j = 0, 0 
         ans = []
         while i < n1 and j < n2:
-            v1, c1 = encoded1[i]
-            v2, c2 = encoded2[j]
-            _sum, _c = v1*v2, min(c1,c2)
-            if ans and v1*v2 == ans[-1][0]:
-                ans[-1][1] += _c
+            v1, freq1 = encoded1[i]
+            v2, freq2 = encoded2[j]
+            product, min_freq = v1*v2, min(freq1,freq2)
+            encoded1[i][1] -= min_freq
+            encoded2[j][1] -= min_freq
+            if ans and product == ans[-1][0]:
+                ans[-1][1] += min_freq
             else:
-                ans.append([_sum, _c])
-            if _c == c1 and _c == c2:
+                ans.append([product, min_freq])
+            if encoded1[i][1] == 0:
                 i += 1
+            if encoded2[j][1] == 0:
                 j += 1
-            else:
-                if _c == c1:
-                    i += 1
-                    encoded2[j][1] -= _c
-                else:
-                    j += 1
-                    encoded1[i][1] -= _c
         return ans
-        
