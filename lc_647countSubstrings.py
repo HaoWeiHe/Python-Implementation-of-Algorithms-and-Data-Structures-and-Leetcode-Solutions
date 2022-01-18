@@ -1,6 +1,24 @@
 class Solution():
-
   def countSubstrings(self, s):
+    n = len(s)
+    self.ans = 0 
+
+    def helper(l, r):
+      if r >= n :
+        return False
+      while l >= 0 and r < n  :
+        if s[l]!=s[r]:
+          return
+        self.ans += 1
+        l -= 1
+        r += 1
+      return 
+  
+    for i in range(n):
+      helper(i, i )
+      helper(i, i +1)
+    return self.ans
+  def countSubstrings4(self, s):
     """
     :type s: str
     :rtype: int
