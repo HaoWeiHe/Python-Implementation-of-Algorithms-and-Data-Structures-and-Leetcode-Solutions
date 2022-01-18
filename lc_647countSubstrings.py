@@ -1,6 +1,32 @@
 class Solution(object):
     def countSubstrings(self, s):
         """
+        :type s: str
+        :rtype: int
+        """
+        ans = 0 
+        n = len(s)
+        dp = [[0]*n for _ in range(n)]
+        for i in range(n):
+            dp[i][i] = True
+            ans += 1
+            if i + 1 < n :
+                dp[i][i+1] = s[i] == s[i + 1]
+                ans += s[i] == s[i+1]
+        
+        for l in range(3,n +1):
+            for i in range(n):
+                j = i + l-1
+                if j >= n:
+                    continue
+                if not s[i] == s[j]:
+                    continue
+                dp[i][j] = dp[i+1][j-1]
+                ans += dp[i][j]
+        return ans
+                
+    def countSubstrings2(self, s):
+        """
         "abc"
        i  v
        j  v
