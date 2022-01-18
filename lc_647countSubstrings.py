@@ -7,6 +7,24 @@ class Solution():
     """
     ans = 0 
     n = len(s)
+    # dp = [[0]*n for _ in range(n)]
+    cur, prev = [0]* n, [0] * n  
+    for i in range(n-1,-1,-1):
+      cur[i] = 1
+      for j in range(i, n):
+        if s[i] == s[j] and ( j-i < 2 or prev[j-1]):
+          cur[j] = 1
+          ans += 1
+      prev, cur =  cur, [0] * n 
+
+    return ans
+  def countSubstrings3(self, s):
+    """
+    :type s: str
+    :rtype: int
+    """
+    ans = 0 
+    n = len(s)
     dp = [[0]*n for _ in range(n)]
     
     for i in range(n-1,-1,-1):
