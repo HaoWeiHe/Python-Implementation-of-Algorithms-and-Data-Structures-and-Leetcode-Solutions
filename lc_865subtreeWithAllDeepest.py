@@ -30,8 +30,8 @@ class Solution(object):
                 return root, 1
             
             lf, cl = getRoot(root.left,lvl+ 1)
-            paris = getRoot(root.right, lvl + 1)
-            rt, cr =  paris
+            rt, cr = getRoot(root.right, lvl + 1)
+        
             if cr == deepest_nu:
                 return rt, cl + cr
             if cl == deepest_nu:
