@@ -1,5 +1,5 @@
 class Solution(object):
-    def differByOne(self, dict):
+    def differByOne2(self, dict):
         """
         :type dict: List[str]
         :rtype: bool
@@ -21,3 +21,18 @@ class Solution(object):
                 if valid(i,j):
                     return True
         return False
+    def differByOne(self, dict):
+        """
+        :type dict: List[str]
+        :rtype: bool
+        """
+        d = defaultdict(int)
+        for s in dict:
+            for i in range(len(s)):
+                current = s[:i]+"*"+s[i+1:]
+                d[current] += 1
+                if d[current] == 2:
+                    return True
+        return False
+                
+        
