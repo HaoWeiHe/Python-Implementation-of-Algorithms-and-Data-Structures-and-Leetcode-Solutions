@@ -17,7 +17,7 @@ class LogSystem(object):
         :type timestamp: str
         :rtype: None
         """
-        self.d[t] = id
+        self.d[tuple(t.split(":"))] = id
         
     
     def retrieve(self, start, end, granularity):
@@ -26,13 +26,10 @@ class LogSystem(object):
                    ^
         """
         ans = []
-        start, end = start.split(":"), end.split(":")
-        for ele, i in self.d.items():
-            time  = ele.split(":")
-            
-            qid = self.getid[granularity]
-
-            if "".join(start[:qid+1]) <= "".join(time[:qid+1] ) <= "".join(end[:qid+1] ):
+        qid = self.getid[granularity]
+        start, end = tuple(start.split(":")[:qid + 1]), tuple(end.split(":")[:qid + 1])
+        for time, i in self.d.items():
+            if start <= time[:qid + 1] <=  end:
                 ans.append(i)
         return ans
 
